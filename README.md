@@ -28,7 +28,7 @@ https://web.microsoftstream.com/video/99c4994f-5162-43bc-95a8-57c8f9481471
 https://web.microsoftstream.com/video/f65517ae-1f28-4d11-bf0e-ac8cc8a89b36
 
 ¬Lista con grupos:
-En espera...
+https://drive.google.com/file/d/1rvGvOQWluzvZXj-JCeNmp9ysDpmUO6Iq/view?usp=sharing
 
 ¬Referencia/Explicacion de Trabajo:
-https://drive.google.com/drive/folders/1Nhov8ukRZPeW61nOkVqHmT5JmBDJ6fPO?usp=sharing
+https://drive.google.com/file/d/1ZtfSJ5ZLMBYDw1lmiW7V9j1m64kDiNkt/view?usp=sharing
