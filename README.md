@@ -1,6 +1,26 @@
 # BanCovid
 "Luchando por mantener tu dinero con vida!"
 
+# Equipo:
+Core:
+-Fernando Grullon
+-Angel Guzman
+-Carlos Garrido
+
+Caja:
+-Huascar Guzman
+-Jorge Lora
+
+Banking:
+-David Pelaez
+-Jordy Mateo
+
+Integracion:
+-Emily Perez
+-Angel Peña
+-Victor Peña
+
+# Referencias
 ¬Video Explicativo #1:
 https://web.microsoftstream.com/video/99c4994f-5162-43bc-95a8-57c8f9481471
 
