@@ -3,21 +3,31 @@
 
 # Equipo:
 Core:
+
 -Fernando Grullon
+
 -Angel Guzman
+
 -Carlos Garrido
 
 Caja:
+
 -Huascar Guzman
+
 -Jorge Lora
 
 Banking:
+
 -David Pelaez
+
 -Jordy Mateo
 
 Integracion:
+
 -Emily Perez
+
 -Angel Peña
+
 -Victor Peña
 
 # Referencias
