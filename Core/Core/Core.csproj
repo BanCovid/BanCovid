@@ -12,6 +12,7 @@
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -24,7 +25,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -46,8 +46,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -56,8 +65,60 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="ModeloData\Contexto.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Contexto.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModeloData\Contexto.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Contexto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModeloData\Contexto.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Contexto.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="ModeloData\Tbl_Beneficiario.cs">
+      <DependentUpon>Contexto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModeloData\Tbl_BeneficiarioEstado.cs">
+      <DependentUpon>Contexto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModeloData\Tbl_Caja.cs">
+      <DependentUpon>Contexto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModeloData\Tbl_Cliente.cs">
+      <DependentUpon>Contexto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModeloData\Tbl_Cuenta.cs">
+      <DependentUpon>Contexto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModeloData\Tbl_EstadoUsuario.cs">
+      <DependentUpon>Contexto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModeloData\Tbl_OperacionCaja.cs">
+      <DependentUpon>Contexto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModeloData\Tbl_OperacionCajaTipo.cs">
+      <DependentUpon>Contexto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModeloData\Tbl_Perfil.cs">
+      <DependentUpon>Contexto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModeloData\Tbl_TipoTransaccion.cs">
+      <DependentUpon>Contexto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModeloData\Tbl_Transaccion.cs">
+      <DependentUpon>Contexto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModeloData\Tbl_Usuario.cs">
+      <DependentUpon>Contexto.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Servicios\BeneficiariosServicios.cs" />
+    <Compile Include="Servicios\EstadosUsuariosServicio.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\BanCovid_DB.mdf">
@@ -68,6 +129,23 @@
       <DependentUpon>BanCovid_DB.mdf</DependentUpon>
     </Content>
     <Content Include="App_Data\SQLQuery_Creation.sql" />
+    <Content Include="BanCovid_DB.mdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="BanCovid_DB_log.ldf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DependentUpon>BanCovid_DB.mdf</DependentUpon>
+    </Content>
+    <Content Include="ModeloData\Contexto.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Contexto.Context.cs</LastGenOutput>
+      <DependentUpon>Contexto.edmx</DependentUpon>
+    </Content>
+    <Content Include="ModeloData\Contexto.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Contexto.edmx</DependentUpon>
+      <LastGenOutput>Contexto.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
@@ -81,5 +159,22 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="ModeloData\Contexto.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Contexto.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+    <None Include="ModeloData\Contexto.edmx.diagram">
+      <DependentUpon>Contexto.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
