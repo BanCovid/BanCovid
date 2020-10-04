@@ -118,7 +118,17 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Servicios\BeneficiariosServicios.cs" />
-    <Compile Include="Servicios\EstadosUsuariosServicio.cs" />
+    <Compile Include="Servicios\BeneficiariosEstadoServicios.cs" />
+    <Compile Include="Servicios\CajaServicios.cs" />
+    <Compile Include="Servicios\ClienteServicios.cs" />
+    <Compile Include="Servicios\OperacionCajaServicios.cs" />
+    <Compile Include="Servicios\CuentaServicio.cs" />
+    <Compile Include="Servicios\EstadosUsuariosServicios.cs" />
+    <Compile Include="Servicios\OperacionCajaTipoServicios.cs" />
+    <Compile Include="Servicios\PerfilServicios.cs" />
+    <Compile Include="Servicios\TipoTransacServicios.cs" />
+    <Compile Include="Servicios\TransaccionServicios.cs" />
+    <Compile Include="Servicios\UsuarioSericios.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\BanCovid_DB.mdf">

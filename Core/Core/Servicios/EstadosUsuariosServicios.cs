@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace Core.Servicios
 {
-     public class EstadosUsuariosServicio
+     public class EstadosUsuariosServicios
     {
         public BanCovid_DBEntities _db;
-        public EstadosUsuariosServicio()
+        public EstadosUsuariosServicios()
         {
             _db = new BanCovid_DBEntities();
         }
