@@ -83,7 +83,7 @@ GO
 CREATE TABLE [dbo].[Tbl_EstadoUsuario]
 (
 	[Id] SmallINT IDENTITY(1, 1) NOT NULL,
-	[Nombre] varchar NOT NULL,
+	[Nombre] varchar(20) NOT NULL,
 	[Estado] bit NOT NULL
 	PRIMARY KEY(Id)
 )
@@ -93,7 +93,7 @@ GO
 CREATE TABLE [dbo].[Tbl_Perfil]
 (
 	[Id] INT IDENTITY(1, 1) NOT NULL,
-	[Nombre] varchar NOT NULL,
+	[Nombre] varchar(50) NOT NULL,
 	[Descripcion] varchar NOT NULL,
 	[Estado] bit NOT NULL
 	PRIMARY KEY(Id)

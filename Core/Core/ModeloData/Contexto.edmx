@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="BanCovid_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="BanCovid_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Tbl_Beneficiario">
           <Key>
             <PropertyRef Name="IdCuenta" />
@@ -56,7 +56,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Nombre" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="Estado" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Tbl_OperacionCaja">
@@ -134,8 +134,7 @@
           <EntitySet Name="Tbl_Transaccion" EntityType="Self.Tbl_Transaccion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Usuario" EntityType="Self.Tbl_Usuario" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="BanCovid_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -184,14 +183,6 @@
           <Property Name="ClienteId" Type="Int32" Nullable="false" />
           <Property Name="Monto" Type="Decimal" Precision="20" Scale="2" Nullable="false" />
           <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
-        </EntityType>
-        <EntityType Name="Tbl_EstadoUsuario">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nombre" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Estado" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Tbl_OperacionCaja">
           <Key>
@@ -260,14 +251,22 @@
           <EntitySet Name="Tbl_Caja" EntityType="Self.Tbl_Caja" />
           <EntitySet Name="Tbl_Cliente" EntityType="Self.Tbl_Cliente" />
           <EntitySet Name="Tbl_Cuenta" EntityType="Self.Tbl_Cuenta" />
-          <EntitySet Name="Tbl_EstadoUsuario" EntityType="Self.Tbl_EstadoUsuario" />
           <EntitySet Name="Tbl_OperacionCaja" EntityType="Self.Tbl_OperacionCaja" />
           <EntitySet Name="Tbl_OperacionCajaTipo" EntityType="Self.Tbl_OperacionCajaTipo" />
           <EntitySet Name="Tbl_Perfil" EntityType="Self.Tbl_Perfil" />
           <EntitySet Name="Tbl_TipoTransaccion" EntityType="Self.Tbl_TipoTransaccion" />
           <EntitySet Name="Tbl_Transaccion" EntityType="Self.Tbl_Transaccion" />
           <EntitySet Name="Tbl_Usuario" EntityType="Self.Tbl_Usuario" />
+          <EntitySet Name="Tbl_EstadoUsuario" EntityType="BanCovid_DBModel.Tbl_EstadoUsuario" />
         </EntityContainer>
+        <EntityType Name="Tbl_EstadoUsuario">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="Boolean" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -321,15 +320,6 @@
                 <ScalarProperty Name="ClienteId" ColumnName="ClienteId" />
                 <ScalarProperty Name="Monto" ColumnName="Monto" />
                 <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tbl_EstadoUsuario">
-            <EntityTypeMapping TypeName="BanCovid_DBModel.Tbl_EstadoUsuario">
-              <MappingFragment StoreEntitySet="Tbl_EstadoUsuario">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -397,6 +387,15 @@
                 <ScalarProperty Name="Perfil_Id" ColumnName="Perfil_Id" />
                 <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
                 <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_EstadoUsuario">
+            <EntityTypeMapping TypeName="BanCovid_DBModel.Tbl_EstadoUsuario">
+              <MappingFragment StoreEntitySet="Tbl_EstadoUsuario">
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

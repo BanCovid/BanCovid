@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Core.Servicios
 {
-    class Beneficiario
+    public class BeneficiarioServicio
     {
 
         public BanCovid_DBEntities _db;
-        public Beneficiario()
+        public BeneficiarioServicio()
         {
             _db = new BanCovid_DBEntities();
         }
