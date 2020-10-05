@@ -42,7 +42,7 @@ namespace Core.Servicios
         {
             var registro = _db.Tbl_EstadoUsuario.SingleOrDefault(x => x.Id == modelo.Id);
 
-            if (string.IsNullOrWhiteSpace(modelo.Nombre))
+            if (!string.IsNullOrWhiteSpace(modelo.Nombre))
                 registro.Nombre = modelo.Nombre;
 
             _db.SaveChanges();

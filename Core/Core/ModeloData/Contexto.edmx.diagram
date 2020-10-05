@@ -10,13 +10,13 @@
         <EntityTypeShape EntityType="BanCovid_DBModel.Tbl_Caja" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BanCovid_DBModel.Tbl_Cliente" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BanCovid_DBModel.Tbl_Cuenta" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BanCovid_DBModel.Tbl_EstadoUsuario" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BanCovid_DBModel.Tbl_OperacionCaja" Width="1.5" PointX="7" PointY="0.875" IsExpanded="true" />
         <EntityTypeShape EntityType="BanCovid_DBModel.Tbl_OperacionCajaTipo" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BanCovid_DBModel.Tbl_Perfil" Width="1.5" PointX="2.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BanCovid_DBModel.Tbl_TipoTransaccion" Width="1.5" PointX="6.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BanCovid_DBModel.Tbl_Transaccion" Width="1.5" PointX="4.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BanCovid_DBModel.Tbl_Usuario" Width="1.5" PointX="6.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BanCovid_DBModel.Tbl_EstadoUsuario" Width="1.5" PointX="9.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

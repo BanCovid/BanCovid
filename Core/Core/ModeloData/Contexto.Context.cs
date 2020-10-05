@@ -30,12 +30,12 @@ namespace Core.ModeloData
         public virtual DbSet<Tbl_Caja> Tbl_Caja { get; set; }
         public virtual DbSet<Tbl_Cliente> Tbl_Cliente { get; set; }
         public virtual DbSet<Tbl_Cuenta> Tbl_Cuenta { get; set; }
-        public virtual DbSet<Tbl_EstadoUsuario> Tbl_EstadoUsuario { get; set; }
         public virtual DbSet<Tbl_OperacionCaja> Tbl_OperacionCaja { get; set; }
         public virtual DbSet<Tbl_OperacionCajaTipo> Tbl_OperacionCajaTipo { get; set; }
         public virtual DbSet<Tbl_Perfil> Tbl_Perfil { get; set; }
         public virtual DbSet<Tbl_TipoTransaccion> Tbl_TipoTransaccion { get; set; }
         public virtual DbSet<Tbl_Transaccion> Tbl_Transaccion { get; set; }
         public virtual DbSet<Tbl_Usuario> Tbl_Usuario { get; set; }
+        public virtual DbSet<Tbl_EstadoUsuario> Tbl_EstadoUsuario { get; set; }
     }
 }

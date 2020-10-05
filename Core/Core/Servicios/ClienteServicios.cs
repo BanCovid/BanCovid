@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Core.Servicios
 {
-    class ClienteServicios
+    public class ClienteServicios
     {
         public BanCovid_DBEntities _db;
         public ClienteServicios()

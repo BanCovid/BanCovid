@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Core.Servicios
 {
-    class OperacionCajaServicios
+    public class OperacionCajaServicios
     {
         public BanCovid_DBEntities _db;
         public OperacionCajaServicios()

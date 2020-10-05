@@ -125,24 +125,17 @@
     <Compile Include="Servicios\CuentaServicio.cs" />
     <Compile Include="Servicios\EstadosUsuariosServicios.cs" />
     <Compile Include="Servicios\OperacionCajaTipoServicios.cs" />
-    <Compile Include="Servicios\PerfilServicios.cs" />
-    <Compile Include="Servicios\TipoTransacServicios.cs" />
+    <Compile Include="Servicios\PerfilesServicios.cs" />
+    <Compile Include="Servicios\TipoTransaccionServicios.cs" />
     <Compile Include="Servicios\TransaccionServicios.cs" />
-    <Compile Include="Servicios\UsuarioSericios.cs" />
+    <Compile Include="Servicios\UsuariosServicios.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\SQLQuery_Creation.sql" />
     <Content Include="App_Data\BanCovid_DB.mdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="App_Data\BanCovid_DB_log.ldf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DependentUpon>BanCovid_DB.mdf</DependentUpon>
-    </Content>
-    <Content Include="App_Data\SQLQuery_Creation.sql" />
-    <Content Include="BanCovid_DB.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="BanCovid_DB_log.ldf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DependentUpon>BanCovid_DB.mdf</DependentUpon>
     </Content>
