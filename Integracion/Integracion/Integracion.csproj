@@ -161,7 +161,18 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\BeneficiariosController.cs" />
+    <Compile Include="Controllers\BeneficiariosEstadoController.cs" />
+    <Compile Include="Controllers\CajaController.cs" />
+    <Compile Include="Controllers\ClienteController.cs" />
+    <Compile Include="Controllers\CuentaController.cs" />
     <Compile Include="Controllers\EstadosUsuarioController.cs" />
+    <Compile Include="Controllers\OperacionCajaController.cs" />
+    <Compile Include="Controllers\OperacionCajaTipoController.cs" />
+    <Compile Include="Controllers\PerfilesController.cs" />
+    <Compile Include="Controllers\TipoTransaccionController.cs" />
+    <Compile Include="Controllers\TransaccionController.cs" />
+    <Compile Include="Controllers\UsuariosController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
