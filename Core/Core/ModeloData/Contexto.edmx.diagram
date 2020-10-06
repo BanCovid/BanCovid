@@ -4,19 +4,35 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="95eb3a1e2a394868b358da815848705f" Name="Diagram1">
-        <EntityTypeShape EntityType="BanCovid_DBModel.Tbl_Beneficiario" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BanCovid_DBModel.Tbl_BeneficiarioEstado" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BanCovid_DBModel.Tbl_Caja" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BanCovid_DBModel.Tbl_Cliente" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BanCovid_DBModel.Tbl_Cuenta" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BanCovid_DBModel.Tbl_OperacionCaja" Width="1.5" PointX="7" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="BanCovid_DBModel.Tbl_OperacionCajaTipo" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BanCovid_DBModel.Tbl_Perfil" Width="1.5" PointX="2.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BanCovid_DBModel.Tbl_TipoTransaccion" Width="1.5" PointX="6.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BanCovid_DBModel.Tbl_Transaccion" Width="1.5" PointX="4.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BanCovid_DBModel.Tbl_Usuario" Width="1.5" PointX="6.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BanCovid_DBModel.Tbl_EstadoUsuario" Width="1.5" PointX="9.375" PointY="0.75" />
+      <Diagram DiagramId="95eb3a1e2a394868b358da815848705f" Name="Diagram1" ZoomLevel="55">
+        <EntityTypeShape EntityType="BanCovid_DBModel.Log4NetLog" Width="1.5" PointX="0.75" PointY="8.875" />
+        <EntityTypeShape EntityType="BanCovid_DBModel.Tbl_Beneficiario" Width="1.5" PointX="12.75" PointY="4.5" />
+        <EntityTypeShape EntityType="BanCovid_DBModel.Tbl_BeneficiarioEstado" Width="1.5" PointX="10.5" PointY="0.75" />
+        <EntityTypeShape EntityType="BanCovid_DBModel.Tbl_Caja" Width="1.5" PointX="5.25" PointY="12.875" />
+        <EntityTypeShape EntityType="BanCovid_DBModel.Tbl_Cliente" Width="1.5" PointX="5.25" PointY="4.625" />
+        <EntityTypeShape EntityType="BanCovid_DBModel.Tbl_Cuenta" Width="1.5" PointX="7.5" PointY="4.125" />
+        <EntityTypeShape EntityType="BanCovid_DBModel.Tbl_EstadoTransaccion" Width="1.5" PointX="7.5" PointY="8" />
+        <EntityTypeShape EntityType="BanCovid_DBModel.Tbl_EstadoUsuario" Width="1.5" PointX="0.75" PointY="1.75" />
+        <EntityTypeShape EntityType="BanCovid_DBModel.Tbl_OperacionCaja" Width="1.5" PointX="7.5" PointY="13.875" />
+        <EntityTypeShape EntityType="BanCovid_DBModel.Tbl_OperacionCajaTipo" Width="1.5" PointX="5.25" PointY="15.75" />
+        <EntityTypeShape EntityType="BanCovid_DBModel.Tbl_Perfil" Width="1.5" PointX="0.75" PointY="4.625" />
+        <EntityTypeShape EntityType="BanCovid_DBModel.Tbl_TipoTransaccion" Width="1.5" PointX="7.5" PointY="10.375" />
+        <EntityTypeShape EntityType="BanCovid_DBModel.Tbl_Transaccion" Width="1.5" PointX="9.75" PointY="3.875" />
+        <EntityTypeShape EntityType="BanCovid_DBModel.Tbl_Usuario" Width="1.5" PointX="3" PointY="3.875" />
+        <AssociationConnector Association="BanCovid_DBModel.FK__Tbl_Benef__Cuent__3587F3E0" />
+        <AssociationConnector Association="BanCovid_DBModel.FK__Tbl_Benef__Cuent__367C1819" />
+        <AssociationConnector Association="BanCovid_DBModel.FK__Tbl_Benef__Estad__37703C52" />
+        <AssociationConnector Association="BanCovid_DBModel.FK__Tbl_Opera__CajaI__56E8E7AB" />
+        <AssociationConnector Association="BanCovid_DBModel.FK__Tbl_Cliente__Id__2CF2ADDF" />
+        <AssociationConnector Association="BanCovid_DBModel.FK__Tbl_Cuent__Clien__30C33EC3" />
+        <AssociationConnector Association="BanCovid_DBModel.FK__Tbl_Trans__Cuent__5CA1C101" />
+        <AssociationConnector Association="BanCovid_DBModel.FK__Tbl_Trans__Cuent__5D95E53A" />
+        <AssociationConnector Association="BanCovid_DBModel.FK__Tbl_Trans__Estad__5BAD9CC8" />
+        <AssociationConnector Association="BanCovid_DBModel.FK__Tbl_Usuar__Estad__236943A5" />
+        <AssociationConnector Association="BanCovid_DBModel.FK__Tbl_Opera__TipoI__55F4C372" />
+        <AssociationConnector Association="BanCovid_DBModel.FK__Tbl_Trans__Opera__5E8A0973" />
+        <AssociationConnector Association="BanCovid_DBModel.FK__Tbl_Usuar__Perfi__245D67DE" />
+        <AssociationConnector Association="BanCovid_DBModel.FK__Tbl_Trans__TipoT__5AB9788F" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

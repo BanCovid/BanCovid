@@ -53,7 +53,7 @@
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="log4net, Version=2.0.11.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <HintPath>..\packages\log4net.2.0.11\lib\net45\log4net.dll</HintPath>
+      <HintPath>..\..\Integracion\packages\log4net.2.0.11\lib\net45\log4net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -70,6 +70,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="General\Seguridad.cs" />
     <Compile Include="ModeloData\Contexto.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -85,6 +86,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Contexto.edmx</DependentUpon>
     </Compile>
+    <Compile Include="ModeloData\Log4NetLog.cs">
+      <DependentUpon>Contexto.tt</DependentUpon>
+    </Compile>
     <Compile Include="ModeloData\Tbl_Beneficiario.cs">
       <DependentUpon>Contexto.tt</DependentUpon>
     </Compile>
@@ -98,6 +102,9 @@
       <DependentUpon>Contexto.tt</DependentUpon>
     </Compile>
     <Compile Include="ModeloData\Tbl_Cuenta.cs">
+      <DependentUpon>Contexto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModeloData\Tbl_EstadoTransaccion.cs">
       <DependentUpon>Contexto.tt</DependentUpon>
     </Compile>
     <Compile Include="ModeloData\Tbl_EstadoUsuario.cs">
@@ -121,6 +128,7 @@
     <Compile Include="ModeloData\Tbl_Usuario.cs">
       <DependentUpon>Contexto.tt</DependentUpon>
     </Compile>
+    <Compile Include="Modelos\UsuarioModelo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Servicios\BeneficiariosServicios.cs" />
     <Compile Include="Servicios\BeneficiariosEstadoServicios.cs" />
