@@ -7,7 +7,7 @@ import '../../node_modules/font-awesome/scss/font-awesome.scss';
 import Loader from './layout/Loader'
 import Aux from "../hoc/_Aux";
 import ScrollToTop from './layout/ScrollToTop';
-import routes from "../route";
+import routes from "../routes";
 import authService from "../services/authService";
 
 const SignIn = React.lazy(() => import('../pages/Authentication/SignIn/SignIn'));
@@ -19,7 +19,6 @@ const AdminLayout = Loadable({
 
 
 const GuestRoutes = () => {
-    const [h, setH] = useState('hola');
     return (
         <Switch>
             <Route exact path={'/auth/sign_in'} component={SignIn} />
@@ -29,18 +28,6 @@ const GuestRoutes = () => {
 };
 
 const App = () => {
-    const menu = routes.map((route, index) => {
-        return (route.component) ? (
-            <Route
-                key={index}
-                path={route.path}
-                exact={route.exact}
-                //name={route.name}
-                render={props => (
-                    <route.component {...props} />
-                )} />
-        ) : (null);
-    });
     return (
         <Aux>
             <ScrollToTop>
@@ -51,7 +38,6 @@ const App = () => {
                                 authService.isAuthenticated ? (
                                     <>
                                         <Switch>
-                                            {menu}
                                             <Route path="/" component={AdminLayout} />
                                         </Switch>
                                     </>

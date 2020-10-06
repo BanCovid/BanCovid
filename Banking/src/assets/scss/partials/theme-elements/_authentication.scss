@@ -4,7 +4,7 @@
 .auth-wrapper {
     position: relative;
     display: flex;
-    align-items: center;
+    // align-items: center;
     justify-content: center;
     overflow: hidden;
     min-width: 100%;
@@ -40,12 +40,18 @@
 
     .auth-content {
         position: relative;
-        width: 390px;
-        padding: 15px;
+        width: 470px;
+        padding: 15px 15px 0px 15px;
         z-index: 5;
         &.multyform,
         &.subscribe {
             width: 750px;
+        }
+        .logo-img {
+            position: inherit;
+            height: 230px;
+            width: auto;
+            margin: 20px 0;
         }
     }
     @media only screen and (max-width: 768px) {

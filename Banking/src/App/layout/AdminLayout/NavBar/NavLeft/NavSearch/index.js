@@ -53,7 +53,7 @@ class NavSearch extends Component {
             <Aux>
                 <div id="main-search" className={searchClass.join(' ')}>
                     <div className="input-group">
-                        <input type="text" id="m-search" className="form-control" placeholder="Search . . ." style={{width: this.state.searchString}}/>
+                        <input type="text" id="m-search" className="form-control" placeholder="Buscar . . ." style={{width: this.state.searchString}}/>
                         <a href={DEMO.BLANK_LINK} className="input-group-append search-close" onClick={this.searchOffHandler}>
                             <i className="feather icon-x input-group-text"/>
                         </a>
