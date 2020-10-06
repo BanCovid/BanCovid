@@ -1,4 +1,5 @@
 ﻿using Core.ModeloData;
+using Core.Modelos;
 using Core.Servicios;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,25 @@ namespace Integracion.Controllers
                 _servicio.Crear(modelo);
 
                 return Ok(modelo);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route("IniciarSesion")]
+        public IHttpActionResult IniciarSesion(UsuarioModelo modelo)
+        {
+            try
+            {
+                var usuario = _servicio.InicioSesion(modelo);
+
+                return Ok(new
+                {
+                    UsuarioId = usuario.Id
+                });
             }
             catch (Exception ex)
             {

@@ -40,9 +40,6 @@ namespace Core.Servicios
             if (!string.IsNullOrWhiteSpace(modelo.Direccion))
                 registro.Direccion = modelo.Direccion;
             
-            if (modelo.UsuarioId != 0)
-                registro.UsuarioId = modelo.UsuarioId;
-
             _db.SaveChanges();
             log.Info("ClienteServicios - Editar - Fin");
         }       

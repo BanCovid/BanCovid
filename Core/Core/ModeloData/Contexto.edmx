@@ -5,13 +5,25 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="BanCovid_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Log4NetLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="Thread" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Level" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Logger" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Message" Type="varchar" MaxLength="4000" Nullable="false" />
+          <Property Name="Exception" Type="varchar" MaxLength="2000" />
+        </EntityType>
         <EntityType Name="Tbl_Beneficiario">
           <Key>
-            <PropertyRef Name="IdCuenta" />
-            <PropertyRef Name="IdCuentaDestino" />
+            <PropertyRef Name="CuentaId" />
+            <PropertyRef Name="CuentaDestinoId" />
           </Key>
-          <Property Name="IdCuenta" Type="int" Nullable="false" />
-          <Property Name="IdCuentaDestino" Type="int" Nullable="false" />
+          <Property Name="CuentaId" Type="int" Nullable="false" />
+          <Property Name="CuentaDestinoId" Type="int" Nullable="false" />
           <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
           <Property Name="Estado" Type="smallint" Nullable="false" />
         </EntityType>
@@ -19,7 +31,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id" Type="smallint" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
         </EntityType>
@@ -31,31 +43,38 @@
           <Property Name="Descripcion" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
           <Property Name="Monto" Type="decimal" Precision="20" Scale="2" Nullable="false" />
-          <Property Name="Estado" Type="smallint" Nullable="false" />
+          <Property Name="Estado" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Tbl_Cliente">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Direccion" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
-          <Property Name="UsuarioId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Tbl_Cuenta">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NoCuenta" Type="varchar" MaxLength="12" Nullable="false" />
           <Property Name="ClienteId" Type="int" Nullable="false" />
           <Property Name="Monto" Type="decimal" Precision="20" Scale="2" Nullable="false" />
           <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tbl_EstadoTransaccion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="smallint" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Tbl_EstadoUsuario">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id" Type="smallint" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="Estado" Type="bit" Nullable="false" />
         </EntityType>
@@ -63,8 +82,9 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TipoId" Type="smallint" Nullable="false" />
+          <Property Name="CajaId" Type="int" Nullable="false" />
           <Property Name="Fecha" Type="datetime" Nullable="false" />
           <Property Name="Monto" Type="decimal" Precision="20" Scale="2" Nullable="false" />
           <Property Name="Estado" Type="bit" Nullable="false" />
@@ -73,7 +93,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id" Type="smallint" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Estado" Type="bit" Nullable="false" />
         </EntityType>
@@ -81,7 +101,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id" Type="smallint" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Descripcion" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="Estado" Type="bit" Nullable="false" />
@@ -90,8 +110,9 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id" Type="smallint" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Estado" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Tbl_Transaccion">
           <Key>
@@ -102,7 +123,9 @@
           <Property Name="Monto" Type="decimal" Precision="20" Scale="2" Nullable="false" />
           <Property Name="Fecha" Type="datetime" Nullable="false" />
           <Property Name="CuentaId" Type="int" Nullable="false" />
-          <Property Name="CajaId" Type="int" Nullable="false" />
+          <Property Name="CuentaDestinoId" Type="int" />
+          <Property Name="OperacionCajaId" Type="bigint" />
+          <Property Name="Estado" Type="smallint" Nullable="false" />
         </EntityType>
         <EntityType Name="Tbl_Usuario">
           <Key>
@@ -110,22 +133,191 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserName" Type="varchar" MaxLength="25" Nullable="false" />
-          <Property Name="Password" Type="varbinary" MaxLength="1" Nullable="false" />
-          <Property Name="Salt" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="Apellido" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="Telefono" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="Cedula" Type="varchar" MaxLength="13" Nullable="false" />
-          <Property Name="Perfil_Id" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Perfil_Id" Type="smallint" Nullable="false" />
           <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
           <Property Name="Estado" Type="smallint" Nullable="false" />
         </EntityType>
+        <Association Name="FK__Tbl_Benef__Cuent__3587F3E0">
+          <End Role="Tbl_Cuenta" Type="Self.Tbl_Cuenta" Multiplicity="1" />
+          <End Role="Tbl_Beneficiario" Type="Self.Tbl_Beneficiario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Cuenta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tbl_Beneficiario">
+              <PropertyRef Name="CuentaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tbl_Benef__Cuent__367C1819">
+          <End Role="Tbl_Cuenta" Type="Self.Tbl_Cuenta" Multiplicity="1" />
+          <End Role="Tbl_Beneficiario" Type="Self.Tbl_Beneficiario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Cuenta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tbl_Beneficiario">
+              <PropertyRef Name="CuentaDestinoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tbl_Benef__Estad__37703C52">
+          <End Role="Tbl_BeneficiarioEstado" Type="Self.Tbl_BeneficiarioEstado" Multiplicity="1" />
+          <End Role="Tbl_Beneficiario" Type="Self.Tbl_Beneficiario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_BeneficiarioEstado">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tbl_Beneficiario">
+              <PropertyRef Name="Estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tbl_Cliente__Id__2CF2ADDF">
+          <End Role="Tbl_Usuario" Type="Self.Tbl_Usuario" Multiplicity="1" />
+          <End Role="Tbl_Cliente" Type="Self.Tbl_Cliente" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tbl_Cliente">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tbl_Cuent__Clien__30C33EC3">
+          <End Role="Tbl_Cliente" Type="Self.Tbl_Cliente" Multiplicity="1" />
+          <End Role="Tbl_Cuenta" Type="Self.Tbl_Cuenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Cliente">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tbl_Cuenta">
+              <PropertyRef Name="ClienteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tbl_Opera__CajaI__56E8E7AB">
+          <End Role="Tbl_Caja" Type="Self.Tbl_Caja" Multiplicity="1" />
+          <End Role="Tbl_OperacionCaja" Type="Self.Tbl_OperacionCaja" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Caja">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tbl_OperacionCaja">
+              <PropertyRef Name="CajaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tbl_Opera__TipoI__55F4C372">
+          <End Role="Tbl_OperacionCajaTipo" Type="Self.Tbl_OperacionCajaTipo" Multiplicity="1" />
+          <End Role="Tbl_OperacionCaja" Type="Self.Tbl_OperacionCaja" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_OperacionCajaTipo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tbl_OperacionCaja">
+              <PropertyRef Name="TipoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tbl_Trans__Cuent__5CA1C101">
+          <End Role="Tbl_Cuenta" Type="Self.Tbl_Cuenta" Multiplicity="1" />
+          <End Role="Tbl_Transaccion" Type="Self.Tbl_Transaccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Cuenta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tbl_Transaccion">
+              <PropertyRef Name="CuentaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tbl_Trans__Cuent__5D95E53A">
+          <End Role="Tbl_Cuenta" Type="Self.Tbl_Cuenta" Multiplicity="0..1" />
+          <End Role="Tbl_Transaccion" Type="Self.Tbl_Transaccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Cuenta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tbl_Transaccion">
+              <PropertyRef Name="CuentaDestinoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tbl_Trans__Estad__5BAD9CC8">
+          <End Role="Tbl_EstadoTransaccion" Type="Self.Tbl_EstadoTransaccion" Multiplicity="1" />
+          <End Role="Tbl_Transaccion" Type="Self.Tbl_Transaccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_EstadoTransaccion">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tbl_Transaccion">
+              <PropertyRef Name="Estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tbl_Trans__Opera__5E8A0973">
+          <End Role="Tbl_OperacionCaja" Type="Self.Tbl_OperacionCaja" Multiplicity="0..1" />
+          <End Role="Tbl_Transaccion" Type="Self.Tbl_Transaccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_OperacionCaja">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tbl_Transaccion">
+              <PropertyRef Name="OperacionCajaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tbl_Trans__TipoT__5AB9788F">
+          <End Role="Tbl_TipoTransaccion" Type="Self.Tbl_TipoTransaccion" Multiplicity="1" />
+          <End Role="Tbl_Transaccion" Type="Self.Tbl_Transaccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_TipoTransaccion">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tbl_Transaccion">
+              <PropertyRef Name="TipoTransaccionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tbl_Usuar__Estad__236943A5">
+          <End Role="Tbl_EstadoUsuario" Type="Self.Tbl_EstadoUsuario" Multiplicity="1" />
+          <End Role="Tbl_Usuario" Type="Self.Tbl_Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_EstadoUsuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tbl_Usuario">
+              <PropertyRef Name="Estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tbl_Usuar__Perfi__245D67DE">
+          <End Role="Tbl_Perfil" Type="Self.Tbl_Perfil" Multiplicity="1" />
+          <End Role="Tbl_Usuario" Type="Self.Tbl_Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Perfil">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tbl_Usuario">
+              <PropertyRef Name="Perfil_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="BanCovid_DBModelStoreContainer">
+          <EntitySet Name="Log4NetLog" EntityType="Self.Log4NetLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Beneficiario" EntityType="Self.Tbl_Beneficiario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_BeneficiarioEstado" EntityType="Self.Tbl_BeneficiarioEstado" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Caja" EntityType="Self.Tbl_Caja" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Cliente" EntityType="Self.Tbl_Cliente" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Cuenta" EntityType="Self.Tbl_Cuenta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_EstadoTransaccion" EntityType="Self.Tbl_EstadoTransaccion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_EstadoUsuario" EntityType="Self.Tbl_EstadoUsuario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_OperacionCaja" EntityType="Self.Tbl_OperacionCaja" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_OperacionCajaTipo" EntityType="Self.Tbl_OperacionCajaTipo" Schema="dbo" store:Type="Tables" />
@@ -133,90 +325,267 @@
           <EntitySet Name="Tbl_TipoTransaccion" EntityType="Self.Tbl_TipoTransaccion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Transaccion" EntityType="Self.Tbl_Transaccion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Usuario" EntityType="Self.Tbl_Usuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Tbl_Benef__Cuent__3587F3E0" Association="Self.FK__Tbl_Benef__Cuent__3587F3E0">
+            <End Role="Tbl_Cuenta" EntitySet="Tbl_Cuenta" />
+            <End Role="Tbl_Beneficiario" EntitySet="Tbl_Beneficiario" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Benef__Cuent__367C1819" Association="Self.FK__Tbl_Benef__Cuent__367C1819">
+            <End Role="Tbl_Cuenta" EntitySet="Tbl_Cuenta" />
+            <End Role="Tbl_Beneficiario" EntitySet="Tbl_Beneficiario" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Benef__Estad__37703C52" Association="Self.FK__Tbl_Benef__Estad__37703C52">
+            <End Role="Tbl_BeneficiarioEstado" EntitySet="Tbl_BeneficiarioEstado" />
+            <End Role="Tbl_Beneficiario" EntitySet="Tbl_Beneficiario" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Cliente__Id__2CF2ADDF" Association="Self.FK__Tbl_Cliente__Id__2CF2ADDF">
+            <End Role="Tbl_Usuario" EntitySet="Tbl_Usuario" />
+            <End Role="Tbl_Cliente" EntitySet="Tbl_Cliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Cuent__Clien__30C33EC3" Association="Self.FK__Tbl_Cuent__Clien__30C33EC3">
+            <End Role="Tbl_Cliente" EntitySet="Tbl_Cliente" />
+            <End Role="Tbl_Cuenta" EntitySet="Tbl_Cuenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Opera__CajaI__56E8E7AB" Association="Self.FK__Tbl_Opera__CajaI__56E8E7AB">
+            <End Role="Tbl_Caja" EntitySet="Tbl_Caja" />
+            <End Role="Tbl_OperacionCaja" EntitySet="Tbl_OperacionCaja" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Opera__TipoI__55F4C372" Association="Self.FK__Tbl_Opera__TipoI__55F4C372">
+            <End Role="Tbl_OperacionCajaTipo" EntitySet="Tbl_OperacionCajaTipo" />
+            <End Role="Tbl_OperacionCaja" EntitySet="Tbl_OperacionCaja" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Trans__Cuent__5CA1C101" Association="Self.FK__Tbl_Trans__Cuent__5CA1C101">
+            <End Role="Tbl_Cuenta" EntitySet="Tbl_Cuenta" />
+            <End Role="Tbl_Transaccion" EntitySet="Tbl_Transaccion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Trans__Cuent__5D95E53A" Association="Self.FK__Tbl_Trans__Cuent__5D95E53A">
+            <End Role="Tbl_Cuenta" EntitySet="Tbl_Cuenta" />
+            <End Role="Tbl_Transaccion" EntitySet="Tbl_Transaccion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Trans__Estad__5BAD9CC8" Association="Self.FK__Tbl_Trans__Estad__5BAD9CC8">
+            <End Role="Tbl_EstadoTransaccion" EntitySet="Tbl_EstadoTransaccion" />
+            <End Role="Tbl_Transaccion" EntitySet="Tbl_Transaccion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Trans__Opera__5E8A0973" Association="Self.FK__Tbl_Trans__Opera__5E8A0973">
+            <End Role="Tbl_OperacionCaja" EntitySet="Tbl_OperacionCaja" />
+            <End Role="Tbl_Transaccion" EntitySet="Tbl_Transaccion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Trans__TipoT__5AB9788F" Association="Self.FK__Tbl_Trans__TipoT__5AB9788F">
+            <End Role="Tbl_TipoTransaccion" EntitySet="Tbl_TipoTransaccion" />
+            <End Role="Tbl_Transaccion" EntitySet="Tbl_Transaccion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Usuar__Estad__236943A5" Association="Self.FK__Tbl_Usuar__Estad__236943A5">
+            <End Role="Tbl_EstadoUsuario" EntitySet="Tbl_EstadoUsuario" />
+            <End Role="Tbl_Usuario" EntitySet="Tbl_Usuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Usuar__Perfi__245D67DE" Association="Self.FK__Tbl_Usuar__Perfi__245D67DE">
+            <End Role="Tbl_Perfil" EntitySet="Tbl_Perfil" />
+            <End Role="Tbl_Usuario" EntitySet="Tbl_Usuario" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="BanCovid_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="BanCovid_DBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Log4NetLog" EntityType="BanCovid_DBModel.Log4NetLog" />
+          <EntitySet Name="Tbl_Beneficiario" EntityType="BanCovid_DBModel.Tbl_Beneficiario" />
+          <EntitySet Name="Tbl_BeneficiarioEstado" EntityType="BanCovid_DBModel.Tbl_BeneficiarioEstado" />
+          <EntitySet Name="Tbl_Caja" EntityType="BanCovid_DBModel.Tbl_Caja" />
+          <EntitySet Name="Tbl_Cliente" EntityType="BanCovid_DBModel.Tbl_Cliente" />
+          <EntitySet Name="Tbl_Cuenta" EntityType="BanCovid_DBModel.Tbl_Cuenta" />
+          <EntitySet Name="Tbl_EstadoTransaccion" EntityType="BanCovid_DBModel.Tbl_EstadoTransaccion" />
+          <EntitySet Name="Tbl_EstadoUsuario" EntityType="BanCovid_DBModel.Tbl_EstadoUsuario" />
+          <EntitySet Name="Tbl_OperacionCaja" EntityType="BanCovid_DBModel.Tbl_OperacionCaja" />
+          <EntitySet Name="Tbl_OperacionCajaTipo" EntityType="BanCovid_DBModel.Tbl_OperacionCajaTipo" />
+          <EntitySet Name="Tbl_Perfil" EntityType="BanCovid_DBModel.Tbl_Perfil" />
+          <EntitySet Name="Tbl_TipoTransaccion" EntityType="BanCovid_DBModel.Tbl_TipoTransaccion" />
+          <EntitySet Name="Tbl_Transaccion" EntityType="BanCovid_DBModel.Tbl_Transaccion" />
+          <EntitySet Name="Tbl_Usuario" EntityType="BanCovid_DBModel.Tbl_Usuario" />
+          <AssociationSet Name="FK__Tbl_Benef__Cuent__3587F3E0" Association="BanCovid_DBModel.FK__Tbl_Benef__Cuent__3587F3E0">
+            <End Role="Tbl_Cuenta" EntitySet="Tbl_Cuenta" />
+            <End Role="Tbl_Beneficiario" EntitySet="Tbl_Beneficiario" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Benef__Cuent__367C1819" Association="BanCovid_DBModel.FK__Tbl_Benef__Cuent__367C1819">
+            <End Role="Tbl_Cuenta" EntitySet="Tbl_Cuenta" />
+            <End Role="Tbl_Beneficiario" EntitySet="Tbl_Beneficiario" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Benef__Estad__37703C52" Association="BanCovid_DBModel.FK__Tbl_Benef__Estad__37703C52">
+            <End Role="Tbl_BeneficiarioEstado" EntitySet="Tbl_BeneficiarioEstado" />
+            <End Role="Tbl_Beneficiario" EntitySet="Tbl_Beneficiario" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Opera__CajaI__56E8E7AB" Association="BanCovid_DBModel.FK__Tbl_Opera__CajaI__56E8E7AB">
+            <End Role="Tbl_Caja" EntitySet="Tbl_Caja" />
+            <End Role="Tbl_OperacionCaja" EntitySet="Tbl_OperacionCaja" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Cliente__Id__2CF2ADDF" Association="BanCovid_DBModel.FK__Tbl_Cliente__Id__2CF2ADDF">
+            <End Role="Tbl_Usuario" EntitySet="Tbl_Usuario" />
+            <End Role="Tbl_Cliente" EntitySet="Tbl_Cliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Cuent__Clien__30C33EC3" Association="BanCovid_DBModel.FK__Tbl_Cuent__Clien__30C33EC3">
+            <End Role="Tbl_Cliente" EntitySet="Tbl_Cliente" />
+            <End Role="Tbl_Cuenta" EntitySet="Tbl_Cuenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Trans__Cuent__5CA1C101" Association="BanCovid_DBModel.FK__Tbl_Trans__Cuent__5CA1C101">
+            <End Role="Tbl_Cuenta" EntitySet="Tbl_Cuenta" />
+            <End Role="Tbl_Transaccion" EntitySet="Tbl_Transaccion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Trans__Cuent__5D95E53A" Association="BanCovid_DBModel.FK__Tbl_Trans__Cuent__5D95E53A">
+            <End Role="Tbl_Cuenta" EntitySet="Tbl_Cuenta" />
+            <End Role="Tbl_Transaccion" EntitySet="Tbl_Transaccion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Trans__Estad__5BAD9CC8" Association="BanCovid_DBModel.FK__Tbl_Trans__Estad__5BAD9CC8">
+            <End Role="Tbl_EstadoTransaccion" EntitySet="Tbl_EstadoTransaccion" />
+            <End Role="Tbl_Transaccion" EntitySet="Tbl_Transaccion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Usuar__Estad__236943A5" Association="BanCovid_DBModel.FK__Tbl_Usuar__Estad__236943A5">
+            <End Role="Tbl_EstadoUsuario" EntitySet="Tbl_EstadoUsuario" />
+            <End Role="Tbl_Usuario" EntitySet="Tbl_Usuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Opera__TipoI__55F4C372" Association="BanCovid_DBModel.FK__Tbl_Opera__TipoI__55F4C372">
+            <End Role="Tbl_OperacionCajaTipo" EntitySet="Tbl_OperacionCajaTipo" />
+            <End Role="Tbl_OperacionCaja" EntitySet="Tbl_OperacionCaja" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Trans__Opera__5E8A0973" Association="BanCovid_DBModel.FK__Tbl_Trans__Opera__5E8A0973">
+            <End Role="Tbl_OperacionCaja" EntitySet="Tbl_OperacionCaja" />
+            <End Role="Tbl_Transaccion" EntitySet="Tbl_Transaccion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Usuar__Perfi__245D67DE" Association="BanCovid_DBModel.FK__Tbl_Usuar__Perfi__245D67DE">
+            <End Role="Tbl_Perfil" EntitySet="Tbl_Perfil" />
+            <End Role="Tbl_Usuario" EntitySet="Tbl_Usuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Trans__TipoT__5AB9788F" Association="BanCovid_DBModel.FK__Tbl_Trans__TipoT__5AB9788F">
+            <End Role="Tbl_TipoTransaccion" EntitySet="Tbl_TipoTransaccion" />
+            <End Role="Tbl_Transaccion" EntitySet="Tbl_Transaccion" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Log4NetLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Thread" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Level" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Logger" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Message" Type="String" Nullable="false" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="Exception" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+        </EntityType>
         <EntityType Name="Tbl_Beneficiario">
           <Key>
-            <PropertyRef Name="IdCuenta" />
-            <PropertyRef Name="IdCuentaDestino" />
+            <PropertyRef Name="CuentaId" />
+            <PropertyRef Name="CuentaDestinoId" />
           </Key>
-          <Property Name="IdCuenta" Type="Int32" Nullable="false" />
-          <Property Name="IdCuentaDestino" Type="Int32" Nullable="false" />
+          <Property Name="CuentaId" Type="Int32" Nullable="false" />
+          <Property Name="CuentaDestinoId" Type="Int32" Nullable="false" />
           <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Estado" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="Tbl_Cuenta" Relationship="BanCovid_DBModel.FK__Tbl_Benef__Cuent__3587F3E0" FromRole="Tbl_Beneficiario" ToRole="Tbl_Cuenta" />
+          <NavigationProperty Name="Tbl_Cuenta1" Relationship="BanCovid_DBModel.FK__Tbl_Benef__Cuent__367C1819" FromRole="Tbl_Beneficiario" ToRole="Tbl_Cuenta" />
+          <NavigationProperty Name="Tbl_BeneficiarioEstado" Relationship="BanCovid_DBModel.FK__Tbl_Benef__Estad__37703C52" FromRole="Tbl_Beneficiario" ToRole="Tbl_BeneficiarioEstado" />
         </EntityType>
         <EntityType Name="Tbl_BeneficiarioEstado">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Id" Type="Int16" Nullable="false" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Tbl_Beneficiario" Relationship="BanCovid_DBModel.FK__Tbl_Benef__Estad__37703C52" FromRole="Tbl_BeneficiarioEstado" ToRole="Tbl_Beneficiario" />
         </EntityType>
         <EntityType Name="Tbl_Caja">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Descripcion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Monto" Type="Decimal" Precision="20" Scale="2" Nullable="false" />
-          <Property Name="Estado" Type="Int16" Nullable="false" />
+          <Property Name="Monto" Type="Decimal" Nullable="false" Precision="20" Scale="2" />
+          <Property Name="Estado" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Tbl_OperacionCaja" Relationship="BanCovid_DBModel.FK__Tbl_Opera__CajaI__56E8E7AB" FromRole="Tbl_Caja" ToRole="Tbl_OperacionCaja" />
         </EntityType>
         <EntityType Name="Tbl_Cliente">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Direccion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Direccion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Tbl_Usuario" Relationship="BanCovid_DBModel.FK__Tbl_Cliente__Id__2CF2ADDF" FromRole="Tbl_Cliente" ToRole="Tbl_Usuario" />
+          <NavigationProperty Name="Tbl_Cuenta" Relationship="BanCovid_DBModel.FK__Tbl_Cuent__Clien__30C33EC3" FromRole="Tbl_Cliente" ToRole="Tbl_Cuenta" />
         </EntityType>
         <EntityType Name="Tbl_Cuenta">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NoCuenta" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
           <Property Name="ClienteId" Type="Int32" Nullable="false" />
-          <Property Name="Monto" Type="Decimal" Precision="20" Scale="2" Nullable="false" />
+          <Property Name="Monto" Type="Decimal" Nullable="false" Precision="20" Scale="2" />
           <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Tbl_Beneficiario" Relationship="BanCovid_DBModel.FK__Tbl_Benef__Cuent__3587F3E0" FromRole="Tbl_Cuenta" ToRole="Tbl_Beneficiario" />
+          <NavigationProperty Name="Tbl_Beneficiario1" Relationship="BanCovid_DBModel.FK__Tbl_Benef__Cuent__367C1819" FromRole="Tbl_Cuenta" ToRole="Tbl_Beneficiario" />
+          <NavigationProperty Name="Tbl_Cliente" Relationship="BanCovid_DBModel.FK__Tbl_Cuent__Clien__30C33EC3" FromRole="Tbl_Cuenta" ToRole="Tbl_Cliente" />
+          <NavigationProperty Name="Tbl_Transaccion" Relationship="BanCovid_DBModel.FK__Tbl_Trans__Cuent__5CA1C101" FromRole="Tbl_Cuenta" ToRole="Tbl_Transaccion" />
+          <NavigationProperty Name="Tbl_Transaccion1" Relationship="BanCovid_DBModel.FK__Tbl_Trans__Cuent__5D95E53A" FromRole="Tbl_Cuenta" ToRole="Tbl_Transaccion" />
+        </EntityType>
+        <EntityType Name="Tbl_EstadoTransaccion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int16" Nullable="false" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Tbl_Transaccion" Relationship="BanCovid_DBModel.FK__Tbl_Trans__Estad__5BAD9CC8" FromRole="Tbl_EstadoTransaccion" ToRole="Tbl_Transaccion" />
+        </EntityType>
+        <EntityType Name="Tbl_EstadoUsuario">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int16" Nullable="false" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Tbl_Usuario" Relationship="BanCovid_DBModel.FK__Tbl_Usuar__Estad__236943A5" FromRole="Tbl_EstadoUsuario" ToRole="Tbl_Usuario" />
         </EntityType>
         <EntityType Name="Tbl_OperacionCaja">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TipoId" Type="Int16" Nullable="false" />
+          <Property Name="CajaId" Type="Int32" Nullable="false" />
           <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Monto" Type="Decimal" Precision="20" Scale="2" Nullable="false" />
+          <Property Name="Monto" Type="Decimal" Nullable="false" Precision="20" Scale="2" />
           <Property Name="Estado" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Tbl_Caja" Relationship="BanCovid_DBModel.FK__Tbl_Opera__CajaI__56E8E7AB" FromRole="Tbl_OperacionCaja" ToRole="Tbl_Caja" />
+          <NavigationProperty Name="Tbl_OperacionCajaTipo" Relationship="BanCovid_DBModel.FK__Tbl_Opera__TipoI__55F4C372" FromRole="Tbl_OperacionCaja" ToRole="Tbl_OperacionCajaTipo" />
+          <NavigationProperty Name="Tbl_Transaccion" Relationship="BanCovid_DBModel.FK__Tbl_Trans__Opera__5E8A0973" FromRole="Tbl_OperacionCaja" ToRole="Tbl_Transaccion" />
         </EntityType>
         <EntityType Name="Tbl_OperacionCajaTipo">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Id" Type="Int16" Nullable="false" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Estado" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Tbl_OperacionCaja" Relationship="BanCovid_DBModel.FK__Tbl_Opera__TipoI__55F4C372" FromRole="Tbl_OperacionCajaTipo" ToRole="Tbl_OperacionCaja" />
         </EntityType>
         <EntityType Name="Tbl_Perfil">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Descripcion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Id" Type="Int16" Nullable="false" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="Estado" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Tbl_Usuario" Relationship="BanCovid_DBModel.FK__Tbl_Usuar__Perfi__245D67DE" FromRole="Tbl_Perfil" ToRole="Tbl_Usuario" />
         </EntityType>
         <EntityType Name="Tbl_TipoTransaccion">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Id" Type="Int16" Nullable="false" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Tbl_Transaccion" Relationship="BanCovid_DBModel.FK__Tbl_Trans__TipoT__5AB9788F" FromRole="Tbl_TipoTransaccion" ToRole="Tbl_Transaccion" />
         </EntityType>
         <EntityType Name="Tbl_Transaccion">
           <Key>
@@ -224,169 +593,278 @@
           </Key>
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TipoTransaccionId" Type="Int16" Nullable="false" />
-          <Property Name="Monto" Type="Decimal" Precision="20" Scale="2" Nullable="false" />
+          <Property Name="Monto" Type="Decimal" Nullable="false" Precision="20" Scale="2" />
           <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="CuentaId" Type="Int32" Nullable="false" />
-          <Property Name="CajaId" Type="Int32" Nullable="false" />
+          <Property Name="CuentaDestinoId" Type="Int32" />
+          <Property Name="OperacionCajaId" Type="Int64" />
+          <Property Name="Estado" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="Tbl_Cuenta" Relationship="BanCovid_DBModel.FK__Tbl_Trans__Cuent__5CA1C101" FromRole="Tbl_Transaccion" ToRole="Tbl_Cuenta" />
+          <NavigationProperty Name="Tbl_Cuenta1" Relationship="BanCovid_DBModel.FK__Tbl_Trans__Cuent__5D95E53A" FromRole="Tbl_Transaccion" ToRole="Tbl_Cuenta" />
+          <NavigationProperty Name="Tbl_EstadoTransaccion" Relationship="BanCovid_DBModel.FK__Tbl_Trans__Estad__5BAD9CC8" FromRole="Tbl_Transaccion" ToRole="Tbl_EstadoTransaccion" />
+          <NavigationProperty Name="Tbl_OperacionCaja" Relationship="BanCovid_DBModel.FK__Tbl_Trans__Opera__5E8A0973" FromRole="Tbl_Transaccion" ToRole="Tbl_OperacionCaja" />
+          <NavigationProperty Name="Tbl_TipoTransaccion" Relationship="BanCovid_DBModel.FK__Tbl_Trans__TipoT__5AB9788F" FromRole="Tbl_Transaccion" ToRole="Tbl_TipoTransaccion" />
         </EntityType>
         <EntityType Name="Tbl_Usuario">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Password" Type="Binary" MaxLength="1" FixedLength="false" Nullable="false" />
-          <Property Name="Salt" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Apellido" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Telefono" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Cedula" Type="String" MaxLength="13" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Perfil_Id" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Apellido" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Telefono" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Cedula" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="Perfil_Id" Type="Int16" Nullable="false" />
           <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Estado" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="Tbl_Cliente" Relationship="BanCovid_DBModel.FK__Tbl_Cliente__Id__2CF2ADDF" FromRole="Tbl_Usuario" ToRole="Tbl_Cliente" />
+          <NavigationProperty Name="Tbl_EstadoUsuario" Relationship="BanCovid_DBModel.FK__Tbl_Usuar__Estad__236943A5" FromRole="Tbl_Usuario" ToRole="Tbl_EstadoUsuario" />
+          <NavigationProperty Name="Tbl_Perfil" Relationship="BanCovid_DBModel.FK__Tbl_Usuar__Perfi__245D67DE" FromRole="Tbl_Usuario" ToRole="Tbl_Perfil" />
         </EntityType>
-        <EntityContainer Name="BanCovid_DBEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Tbl_Beneficiario" EntityType="Self.Tbl_Beneficiario" />
-          <EntitySet Name="Tbl_BeneficiarioEstado" EntityType="Self.Tbl_BeneficiarioEstado" />
-          <EntitySet Name="Tbl_Caja" EntityType="Self.Tbl_Caja" />
-          <EntitySet Name="Tbl_Cliente" EntityType="Self.Tbl_Cliente" />
-          <EntitySet Name="Tbl_Cuenta" EntityType="Self.Tbl_Cuenta" />
-          <EntitySet Name="Tbl_OperacionCaja" EntityType="Self.Tbl_OperacionCaja" />
-          <EntitySet Name="Tbl_OperacionCajaTipo" EntityType="Self.Tbl_OperacionCajaTipo" />
-          <EntitySet Name="Tbl_Perfil" EntityType="Self.Tbl_Perfil" />
-          <EntitySet Name="Tbl_TipoTransaccion" EntityType="Self.Tbl_TipoTransaccion" />
-          <EntitySet Name="Tbl_Transaccion" EntityType="Self.Tbl_Transaccion" />
-          <EntitySet Name="Tbl_Usuario" EntityType="Self.Tbl_Usuario" />
-          <EntitySet Name="Tbl_EstadoUsuario" EntityType="BanCovid_DBModel.Tbl_EstadoUsuario" />
-        </EntityContainer>
-        <EntityType Name="Tbl_EstadoUsuario">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Estado" Type="Boolean" Nullable="false" />
-        </EntityType>
+        <Association Name="FK__Tbl_Benef__Cuent__3587F3E0">
+          <End Type="BanCovid_DBModel.Tbl_Cuenta" Role="Tbl_Cuenta" Multiplicity="1" />
+          <End Type="BanCovid_DBModel.Tbl_Beneficiario" Role="Tbl_Beneficiario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Cuenta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tbl_Beneficiario">
+              <PropertyRef Name="CuentaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tbl_Benef__Cuent__367C1819">
+          <End Type="BanCovid_DBModel.Tbl_Cuenta" Role="Tbl_Cuenta" Multiplicity="1" />
+          <End Type="BanCovid_DBModel.Tbl_Beneficiario" Role="Tbl_Beneficiario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Cuenta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tbl_Beneficiario">
+              <PropertyRef Name="CuentaDestinoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tbl_Benef__Estad__37703C52">
+          <End Type="BanCovid_DBModel.Tbl_BeneficiarioEstado" Role="Tbl_BeneficiarioEstado" Multiplicity="1" />
+          <End Type="BanCovid_DBModel.Tbl_Beneficiario" Role="Tbl_Beneficiario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_BeneficiarioEstado">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tbl_Beneficiario">
+              <PropertyRef Name="Estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tbl_Opera__CajaI__56E8E7AB">
+          <End Type="BanCovid_DBModel.Tbl_Caja" Role="Tbl_Caja" Multiplicity="1" />
+          <End Type="BanCovid_DBModel.Tbl_OperacionCaja" Role="Tbl_OperacionCaja" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Caja">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tbl_OperacionCaja">
+              <PropertyRef Name="CajaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tbl_Cliente__Id__2CF2ADDF">
+          <End Type="BanCovid_DBModel.Tbl_Usuario" Role="Tbl_Usuario" Multiplicity="1" />
+          <End Type="BanCovid_DBModel.Tbl_Cliente" Role="Tbl_Cliente" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tbl_Cliente">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tbl_Cuent__Clien__30C33EC3">
+          <End Type="BanCovid_DBModel.Tbl_Cliente" Role="Tbl_Cliente" Multiplicity="1" />
+          <End Type="BanCovid_DBModel.Tbl_Cuenta" Role="Tbl_Cuenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Cliente">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tbl_Cuenta">
+              <PropertyRef Name="ClienteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tbl_Trans__Cuent__5CA1C101">
+          <End Type="BanCovid_DBModel.Tbl_Cuenta" Role="Tbl_Cuenta" Multiplicity="1" />
+          <End Type="BanCovid_DBModel.Tbl_Transaccion" Role="Tbl_Transaccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Cuenta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tbl_Transaccion">
+              <PropertyRef Name="CuentaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tbl_Trans__Cuent__5D95E53A">
+          <End Type="BanCovid_DBModel.Tbl_Cuenta" Role="Tbl_Cuenta" Multiplicity="0..1" />
+          <End Type="BanCovid_DBModel.Tbl_Transaccion" Role="Tbl_Transaccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Cuenta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tbl_Transaccion">
+              <PropertyRef Name="CuentaDestinoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tbl_Trans__Estad__5BAD9CC8">
+          <End Type="BanCovid_DBModel.Tbl_EstadoTransaccion" Role="Tbl_EstadoTransaccion" Multiplicity="1" />
+          <End Type="BanCovid_DBModel.Tbl_Transaccion" Role="Tbl_Transaccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_EstadoTransaccion">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tbl_Transaccion">
+              <PropertyRef Name="Estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tbl_Usuar__Estad__236943A5">
+          <End Type="BanCovid_DBModel.Tbl_EstadoUsuario" Role="Tbl_EstadoUsuario" Multiplicity="1" />
+          <End Type="BanCovid_DBModel.Tbl_Usuario" Role="Tbl_Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_EstadoUsuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tbl_Usuario">
+              <PropertyRef Name="Estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tbl_Opera__TipoI__55F4C372">
+          <End Type="BanCovid_DBModel.Tbl_OperacionCajaTipo" Role="Tbl_OperacionCajaTipo" Multiplicity="1" />
+          <End Type="BanCovid_DBModel.Tbl_OperacionCaja" Role="Tbl_OperacionCaja" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_OperacionCajaTipo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tbl_OperacionCaja">
+              <PropertyRef Name="TipoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tbl_Trans__Opera__5E8A0973">
+          <End Type="BanCovid_DBModel.Tbl_OperacionCaja" Role="Tbl_OperacionCaja" Multiplicity="0..1" />
+          <End Type="BanCovid_DBModel.Tbl_Transaccion" Role="Tbl_Transaccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_OperacionCaja">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tbl_Transaccion">
+              <PropertyRef Name="OperacionCajaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tbl_Usuar__Perfi__245D67DE">
+          <End Type="BanCovid_DBModel.Tbl_Perfil" Role="Tbl_Perfil" Multiplicity="1" />
+          <End Type="BanCovid_DBModel.Tbl_Usuario" Role="Tbl_Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Perfil">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tbl_Usuario">
+              <PropertyRef Name="Perfil_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tbl_Trans__TipoT__5AB9788F">
+          <End Type="BanCovid_DBModel.Tbl_TipoTransaccion" Role="Tbl_TipoTransaccion" Multiplicity="1" />
+          <End Type="BanCovid_DBModel.Tbl_Transaccion" Role="Tbl_Transaccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_TipoTransaccion">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tbl_Transaccion">
+              <PropertyRef Name="TipoTransaccionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="BanCovid_DBModelStoreContainer" CdmEntityContainer="BanCovid_DBEntities">
+          <EntitySetMapping Name="Log4NetLog">
+            <EntityTypeMapping TypeName="BanCovid_DBModel.Log4NetLog">
+              <MappingFragment StoreEntitySet="Log4NetLog">
+                <ScalarProperty Name="Exception" ColumnName="Exception" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Logger" ColumnName="Logger" />
+                <ScalarProperty Name="Level" ColumnName="Level" />
+                <ScalarProperty Name="Thread" ColumnName="Thread" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Tbl_Beneficiario">
             <EntityTypeMapping TypeName="BanCovid_DBModel.Tbl_Beneficiario">
               <MappingFragment StoreEntitySet="Tbl_Beneficiario">
-                <ScalarProperty Name="IdCuenta" ColumnName="IdCuenta" />
-                <ScalarProperty Name="IdCuentaDestino" ColumnName="IdCuentaDestino" />
-                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
                 <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="CuentaDestinoId" ColumnName="CuentaDestinoId" />
+                <ScalarProperty Name="CuentaId" ColumnName="CuentaId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Tbl_BeneficiarioEstado">
             <EntityTypeMapping TypeName="BanCovid_DBModel.Tbl_BeneficiarioEstado">
               <MappingFragment StoreEntitySet="Tbl_BeneficiarioEstado">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Tbl_Caja">
             <EntityTypeMapping TypeName="BanCovid_DBModel.Tbl_Caja">
               <MappingFragment StoreEntitySet="Tbl_Caja">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
-                <ScalarProperty Name="Monto" ColumnName="Monto" />
                 <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Monto" ColumnName="Monto" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Tbl_Cliente">
             <EntityTypeMapping TypeName="BanCovid_DBModel.Tbl_Cliente">
               <MappingFragment StoreEntitySet="Tbl_Cliente">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
                 <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
-                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Tbl_Cuenta">
             <EntityTypeMapping TypeName="BanCovid_DBModel.Tbl_Cuenta">
               <MappingFragment StoreEntitySet="Tbl_Cuenta">
-                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="Monto" ColumnName="Monto" />
                 <ScalarProperty Name="ClienteId" ColumnName="ClienteId" />
-                <ScalarProperty Name="Monto" ColumnName="Monto" />
-                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="NoCuenta" ColumnName="NoCuenta" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Tbl_OperacionCaja">
-            <EntityTypeMapping TypeName="BanCovid_DBModel.Tbl_OperacionCaja">
-              <MappingFragment StoreEntitySet="Tbl_OperacionCaja">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="TipoId" ColumnName="TipoId" />
-                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
-                <ScalarProperty Name="Monto" ColumnName="Monto" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tbl_OperacionCajaTipo">
-            <EntityTypeMapping TypeName="BanCovid_DBModel.Tbl_OperacionCajaTipo">
-              <MappingFragment StoreEntitySet="Tbl_OperacionCajaTipo">
-                <ScalarProperty Name="Id" ColumnName="Id" />
+          <EntitySetMapping Name="Tbl_EstadoTransaccion">
+            <EntityTypeMapping TypeName="BanCovid_DBModel.Tbl_EstadoTransaccion">
+              <MappingFragment StoreEntitySet="Tbl_EstadoTransaccion">
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tbl_Perfil">
-            <EntityTypeMapping TypeName="BanCovid_DBModel.Tbl_Perfil">
-              <MappingFragment StoreEntitySet="Tbl_Perfil">
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tbl_TipoTransaccion">
-            <EntityTypeMapping TypeName="BanCovid_DBModel.Tbl_TipoTransaccion">
-              <MappingFragment StoreEntitySet="Tbl_TipoTransaccion">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tbl_Transaccion">
-            <EntityTypeMapping TypeName="BanCovid_DBModel.Tbl_Transaccion">
-              <MappingFragment StoreEntitySet="Tbl_Transaccion">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="TipoTransaccionId" ColumnName="TipoTransaccionId" />
-                <ScalarProperty Name="Monto" ColumnName="Monto" />
-                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
-                <ScalarProperty Name="CuentaId" ColumnName="CuentaId" />
-                <ScalarProperty Name="CajaId" ColumnName="CajaId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tbl_Usuario">
-            <EntityTypeMapping TypeName="BanCovid_DBModel.Tbl_Usuario">
-              <MappingFragment StoreEntitySet="Tbl_Usuario">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="Salt" ColumnName="Salt" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
-                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
-                <ScalarProperty Name="Cedula" ColumnName="Cedula" />
-                <ScalarProperty Name="Perfil_Id" ColumnName="Perfil_Id" />
-                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -395,6 +873,76 @@
               <MappingFragment StoreEntitySet="Tbl_EstadoUsuario">
                 <ScalarProperty Name="Estado" ColumnName="Estado" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_OperacionCaja">
+            <EntityTypeMapping TypeName="BanCovid_DBModel.Tbl_OperacionCaja">
+              <MappingFragment StoreEntitySet="Tbl_OperacionCaja">
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Monto" ColumnName="Monto" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="CajaId" ColumnName="CajaId" />
+                <ScalarProperty Name="TipoId" ColumnName="TipoId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_OperacionCajaTipo">
+            <EntityTypeMapping TypeName="BanCovid_DBModel.Tbl_OperacionCajaTipo">
+              <MappingFragment StoreEntitySet="Tbl_OperacionCajaTipo">
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_Perfil">
+            <EntityTypeMapping TypeName="BanCovid_DBModel.Tbl_Perfil">
+              <MappingFragment StoreEntitySet="Tbl_Perfil">
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_TipoTransaccion">
+            <EntityTypeMapping TypeName="BanCovid_DBModel.Tbl_TipoTransaccion">
+              <MappingFragment StoreEntitySet="Tbl_TipoTransaccion">
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_Transaccion">
+            <EntityTypeMapping TypeName="BanCovid_DBModel.Tbl_Transaccion">
+              <MappingFragment StoreEntitySet="Tbl_Transaccion">
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="OperacionCajaId" ColumnName="OperacionCajaId" />
+                <ScalarProperty Name="CuentaDestinoId" ColumnName="CuentaDestinoId" />
+                <ScalarProperty Name="CuentaId" ColumnName="CuentaId" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Monto" ColumnName="Monto" />
+                <ScalarProperty Name="TipoTransaccionId" ColumnName="TipoTransaccionId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_Usuario">
+            <EntityTypeMapping TypeName="BanCovid_DBModel.Tbl_Usuario">
+              <MappingFragment StoreEntitySet="Tbl_Usuario">
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="Perfil_Id" ColumnName="Perfil_Id" />
+                <ScalarProperty Name="Cedula" ColumnName="Cedula" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

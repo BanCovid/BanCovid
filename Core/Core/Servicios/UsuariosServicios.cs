@@ -1,4 +1,6 @@
-﻿using Core.ModeloData;
+﻿using Core.General;
+using Core.ModeloData;
+using Core.Modelos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,10 +22,24 @@ namespace Core.Servicios
         {
             log.Info("UsuariosServicio - Crear - Inicio");
             modelo.Estado = 1;
+            modelo.Password = Seguridad.EncriptarContrasena(modelo.Password);
             _db.Tbl_Usuario.Add(modelo);
 
             _db.SaveChanges();
             log.Info("UsuariosServicio - Crear - Fin");
+        }
+
+        public Tbl_Usuario InicioSesion(UsuarioModelo modelo)
+        {
+            log.Info("UsuariosServicio - InicioSesion - Inicio");
+
+            var usuario = _db.Tbl_Usuario.SingleOrDefault(x => x.UserName == modelo.UserName);
+
+            if (!Seguridad.Validar(modelo.Password, usuario.Password))
+                throw new Exception("Usuario o contraseña incorrecta");
+            
+            log.Info("UsuariosServicio - InicioSesion - Fin");
+            return usuario;
         }
 
         public List<Tbl_Usuario> ObtenerTodos()
@@ -53,9 +69,6 @@ namespace Core.Servicios
             if (modelo.Password != null)
                 registro.Password = modelo.Password;
 
-            if (modelo.Salt != null)
-                registro.Salt = modelo.Salt;
-
             if (!string.IsNullOrWhiteSpace(modelo.Nombre))
                 registro.Nombre = modelo.Nombre;
 
@@ -68,7 +81,7 @@ namespace Core.Servicios
             if (!string.IsNullOrWhiteSpace(modelo.Nombre))
                 registro.Nombre = modelo.Nombre;
 
-            if (!string.IsNullOrWhiteSpace(modelo.Perfil_Id))
+            if (modelo.Perfil_Id != 0)
                 registro.Perfil_Id = modelo.Perfil_Id;
 
             _db.SaveChanges();

@@ -1,135 +1,230 @@
-﻿--drop table Tbl_Usuario
+﻿
+GO
+--DROP TABLE [Tbl_EstadoUsuario]
+CREATE TABLE [dbo].[Tbl_EstadoUsuario]
+(
+	[Id] SMALLINT PRIMARY KEY NOT NULL ,
+	[Nombre] VARCHAR(20) NOT NULL,
+	[Estado] BIT NOT NULL
+)
 
+INSERT INTO [dbo].[Tbl_EstadoUsuario] VALUES (0, 'Inactivo', 1);
+INSERT INTO [dbo].[Tbl_EstadoUsuario] VALUES (1, 'Activo', 1);
+INSERT INTO [dbo].[Tbl_EstadoUsuario] VALUES (2, 'Bloqueado', 1);
+
+GO
+
+--DROP TABLE [Tbl_Perfil]
+CREATE TABLE [dbo].[Tbl_Perfil]
+(
+	[Id] SMALLINT NOT NULL,
+	[Nombre] VARCHAR(50) NOT NULL,
+	[Descripcion] VARCHAR(200) NOT NULL,
+	[Estado] BIT NOT NULL
+	PRIMARY KEY(Id)
+)
+
+INSERT INTO [dbo].[Tbl_Perfil] VALUES (1, 'Admin', 'Usuario que puede utilizar la aplicación de core visual', 1);
+INSERT INTO [dbo].[Tbl_Perfil] VALUES (2, 'Caja', 'Usuario que puede utilizar la aplicación de caja', 1);
+INSERT INTO [dbo].[Tbl_Perfil] VALUES (3, 'Cliente', 'Usuario final que existe como cliente del banco', 1);
+
+GO
+--DROP TABLE [Tbl_Usuario]
 CREATE TABLE [dbo].[Tbl_Usuario]
 (
 	[Id] INT NOT NULL IDENTITY(1, 1) PRIMARY KEY,
 	[UserName] VARCHAR(25) NOT NULL,
-	[Password] VARBINARY NOT NULL,
-	[Salt] VARCHAR(25) NOT NULL,
+	[Password] VARCHAR(200) NOT NULL,
 	[Nombre] VARCHAR(30) NOT NULL,
 	[Apellido] VARCHAR(30) NOT NULL,
 	[Telefono] VARCHAR(10) NOT NULL,
 	[Cedula] VARCHAR(13) NOT NULL,
-	[Perfil_Id] VARCHAR(25) NOT NULL,
+	[Perfil_Id] SMALLINT NOT NULL,
 	[FechaCreacion] DATETIME NOT NULL,
 	[Estado] SMALLINT NOT NULL,
 )
 
-GO
+ALTER TABLE [Tbl_Usuario]
+	ADD FOREIGN KEY (Estado) REFERENCES Tbl_EstadoUsuario(Id);
 
-CREATE TABLE [dbo].[Tbl_Beneficiario]
-(
-	[IdCuenta] INT NOT NULL,
-	[IdCuentaDestino] INT NOT NULL,
-	[FechaCreacion] DATETIME NOT NULL,
-	[Estado] SMALLINT NOT NULL,
-	PRIMARY KEY(IdCuenta, IdCuentaDestino)
-)
+ALTER TABLE [Tbl_Usuario]
+	ADD FOREIGN KEY (Perfil_Id) REFERENCES Tbl_Perfil(Id);
 
 GO
 
-CREATE TABLE [dbo].[Tbl_Cuenta]
-(
-	[Id] INT NOT NULL IDENTITY(1, 1),
-	[ClienteId] INT NOT NULL,
-	[Monto] Decimal(20,2) NOT NULL,
-	[FechaCreacion] Datetime NOT NULL,
-	PRIMARY KEY(Id)
-)
 
-GO
 
+--DROP TABLE [Tbl_Cliente]
 CREATE TABLE [dbo].[Tbl_Cliente]
 (
-	[Id] INT NOT NULL IDENTITY(1, 1),
-	[Direccion] varchar(50) NOT NULL,
-	[FechaCreacion] DATETIME NOT NULL,
-	[UsuarioId] Int NOT NULL,
-	PRIMARY KEY(Id)
+	[Id] INT NOT NULL PRIMARY KEY,
+	[Direccion] VARCHAR(50) NOT NULL,
+	[FechaCreacion] DATETIME NOT NULL
 )
+
+ALTER TABLE [Tbl_Cliente]
+	ADD FOREIGN KEY (Id) REFERENCES Tbl_Usuario(Id);
+
+
 
 GO
 
+--DROP TABLE [Tbl_Cuenta]
+CREATE TABLE [dbo].[Tbl_Cuenta]
+(
+	[Id] INT NOT NULL IDENTITY(1, 1) PRIMARY KEY,
+	[NoCuenta] VARCHAR(12) NOT NULL UNIQUE,
+	[ClienteId] INT NOT NULL,
+	[Monto] Decimal(20,2) NOT NULL,
+	[FechaCreacion] Datetime NOT NULL
+)
+
+ALTER TABLE [Tbl_Cuenta]
+	ADD FOREIGN KEY (ClienteId) REFERENCES Tbl_Cliente(Id);
+
+GO
+
+--DROP TABLE [Tbl_BeneficiarioEstado]
 CREATE TABLE [dbo].[Tbl_BeneficiarioEstado]
 (
-	[Id] SmallINT IDENTITY(1, 1) NOT NULL,
-	[Nombre] varchar(50) NOT NULL,
+	[Id] SMALLINT PRIMARY KEY NOT NULL,
+	[Nombre] VARCHAR(50) NOT NULL,
 	[FechaCreacion] DATETIME NOT NULL
-	PRIMARY KEY(Id)
 )
 
-GO
+INSERT INTO [dbo].[Tbl_BeneficiarioEstado] VALUES (0, 'Inactivo', GETDATE());
+INSERT INTO [dbo].[Tbl_BeneficiarioEstado] VALUES (1, 'Activo', GETDATE());
+INSERT INTO [dbo].[Tbl_BeneficiarioEstado] VALUES (2, 'Bloqueado', GETDATE());
 
-CREATE TABLE [dbo].[Tbl_Transaccion]
+GO
+--DROP TABLE [Tbl_Beneficiario]
+CREATE TABLE [dbo].[Tbl_Beneficiario]
 (
-	[Id] BigINT NOT NULL IDENTITY(1, 1) PRIMARY KEY,
-	[TipoTransaccionId] smallint NOT NULL,
-	[Monto] decimal(20,2) NOT NULL,
-	[Fecha] DATETIME NOT NULL,
 	[CuentaId] INT NOT NULL,
-	[CajaId] INT NOT NULL
+	[CuentaDestinoId] INT NOT NULL,
+	[FechaCreacion] DATETIME NOT NULL,
+	[Estado] SMALLINT NOT NULL,
+	PRIMARY KEY(CuentaId, CuentaDestinoId)
 )
+
+ALTER TABLE [Tbl_Beneficiario]
+	ADD FOREIGN KEY (CuentaId) REFERENCES Tbl_Cuenta(Id);
+
+ALTER TABLE [Tbl_Beneficiario]
+	ADD FOREIGN KEY (CuentaDestinoId) REFERENCES Tbl_Cuenta(Id);
+
+ALTER TABLE [Tbl_Beneficiario]
+	ADD FOREIGN KEY (Estado) REFERENCES Tbl_BeneficiarioEstado(Id);
+
 
 GO
 
+--DROP TABLE [Tbl_TipoTransaccion]
 CREATE TABLE [dbo].[Tbl_TipoTransaccion]
 (
-	[Id] SmallINT NOT NULL IDENTITY(1, 1) PRIMARY KEY,
-	[Nombre] varchar(50) NOT NULL
+	[Id] SMALLINT NOT NULL PRIMARY KEY,
+	[Nombre] VARCHAR(50) NOT NULL,
+	[Estado] BIT NOT NULL
 )
+
+INSERT INTO [dbo].[Tbl_TipoTransaccion] VALUES (1, 'Deposito', 1);
+INSERT INTO [dbo].[Tbl_TipoTransaccion] VALUES (2, 'Retiro', 1);
+INSERT INTO [dbo].[Tbl_TipoTransaccion] VALUES (3, 'Transferencia Interna', 1);
+INSERT INTO [dbo].[Tbl_TipoTransaccion] VALUES (4, 'Transferencia Externa', 1);
+
+GO
+CREATE TABLE [dbo].[Tbl_EstadoTransaccion]
+(
+	[Id] SMALLINT NOT NULL PRIMARY KEY,
+	[Nombre] VARCHAR(50) NOT NULL
+)
+
+INSERT INTO [dbo].[Tbl_EstadoTransaccion] VALUES (0, 'Cancelado');
+INSERT INTO [dbo].[Tbl_EstadoTransaccion] VALUES (1, 'En proceso');
+INSERT INTO [dbo].[Tbl_EstadoTransaccion] VALUES (2, 'Realizado');
 
 GO
 
-CREATE TABLE [dbo].[Tbl_EstadoUsuario]
+
+--DROP TABLE [Tbl_OperacionCajaTipo]
+CREATE TABLE [dbo].[Tbl_OperacionCajaTipo]
 (
-	[Id] SmallINT IDENTITY(1, 1) NOT NULL,
-	[Nombre] varchar(20) NOT NULL,
-	[Estado] bit NOT NULL
+	[Id] SMALLINT NOT NULL,
+	[Nombre] VARCHAR(50) NOT NULL,
+	[Estado] BIT NOT NULL
 	PRIMARY KEY(Id)
 )
 
-GO
-
-CREATE TABLE [dbo].[Tbl_Perfil]
-(
-	[Id] INT IDENTITY(1, 1) NOT NULL,
-	[Nombre] varchar(50) NOT NULL,
-	[Descripcion] varchar(200) NOT NULL,
-	[Estado] bit NOT NULL
-	PRIMARY KEY(Id)
-)
+INSERT INTO [dbo].[Tbl_OperacionCajaTipo] VALUES (1, 'Apertura de caja', 1);
+INSERT INTO [dbo].[Tbl_OperacionCajaTipo] VALUES (2, 'Cierre de caja', 1);
+INSERT INTO [dbo].[Tbl_OperacionCajaTipo] VALUES (3, 'Entrada de efectivo', 1);
+INSERT INTO [dbo].[Tbl_OperacionCajaTipo] VALUES (4, 'Salida de efectivo', 1);
 
 GO
 
+--DROP TABLE [Tbl_Caja]
 CREATE TABLE [dbo].[Tbl_Caja]
 (
 	[Id] INT IDENTITY(1, 1) NOT NULL,
-	[Descripcion] varchar(200) NOT NULL,
-	[FechaCreacion] Datetime NOT NULL,
-	[Monto] decimal(20,2) NOT NULL,
-	[Estado] smallint NOT NULL
-	PRIMARY KEY(Id)
-)
-
-CREATE TABLE [dbo].[Tbl_OperacionCaja]
-(
-	[Id] smallINT IDENTITY(1, 1) NOT NULL,
-	[TipoId] smallint NOT NULL,
-	[Fecha] Datetime NOT NULL,
-	[Monto] decimal(20,2) NOT NULL,
-	[Estado] bit NOT NULL
+	[Descripcion] VARCHAR(200) NOT NULL,
+	[FechaCreacion] DATETIME NOT NULL,
+	[Monto] DECIMAL(20,2) NOT NULL,
+	[Estado] BIT NOT NULL -- 0 - No disponible, 1 - Disponible
 	PRIMARY KEY(Id)
 )
 
 GO
 
-CREATE TABLE [dbo].[Tbl_OperacionCajaTipo]
+--DROP TABLE [Tbl_OperacionCaja]
+CREATE TABLE [dbo].[Tbl_OperacionCaja]
 (
-	[Id] smallINT IDENTITY(1, 1) NOT NULL,
-	[Nombre] varchar(50) NOT NULL,
-	[Estado] bit NOT NULL
+	[Id] BIGINT IDENTITY(1, 1) NOT NULL,
+	[TipoId] SMALLINT NOT NULL,
+	[CajaId] INT NOT NULL,
+	[Fecha] DATETIME NOT NULL,
+	[Monto] DECIMAL(20,2) NOT NULL,
+	[Estado] BIT NOT NULL
 	PRIMARY KEY(Id)
 )
+
+ALTER TABLE [Tbl_OperacionCaja]
+	ADD FOREIGN KEY (TipoId) REFERENCES Tbl_OperacionCajaTipo(Id);
+
+	
+ALTER TABLE [Tbl_OperacionCaja]
+	ADD FOREIGN KEY (CajaId) REFERENCES Tbl_Caja(Id);
+
+
+GO
+--DROP TABLE [Tbl_Transaccion]
+CREATE TABLE [dbo].[Tbl_Transaccion]
+(
+	[Id] BIGINT NOT NULL IDENTITY(1, 1) PRIMARY KEY,
+	[TipoTransaccionId] SMALLINT NOT NULL,
+	[Monto] DECIMAL(20,2) NOT NULL,
+	[Fecha] DATETIME NOT NULL,
+	[CuentaId] INT NOT NULL,
+	[CuentaDestinoId] INT NULL,
+	[OperacionCajaId] BIGINT NULL,
+	[Estado] SMALLINT NOT NULL
+)
+
+ALTER TABLE [Tbl_Transaccion]
+	ADD FOREIGN KEY (TipoTransaccionId) REFERENCES Tbl_TipoTransaccion(Id);
+
+ALTER TABLE [Tbl_Transaccion]
+	ADD FOREIGN KEY (Estado) REFERENCES Tbl_EstadoTransaccion(Id);
+
+ALTER TABLE [Tbl_Transaccion]
+	ADD FOREIGN KEY (CuentaId) REFERENCES Tbl_Cuenta(Id);
+
+ALTER TABLE [Tbl_Transaccion]
+	ADD FOREIGN KEY (CuentaDestinoId) REFERENCES Tbl_Cuenta(Id);
+	
+ALTER TABLE [Tbl_Transaccion]
+	ADD FOREIGN KEY (OperacionCajaId) REFERENCES Tbl_OperacionCaja(Id);
+
+
 
 GO
 
@@ -157,8 +252,3 @@ CREATE PROCEDURE [dbo].[ppLog4net]
 AS
 	INSERT INTO dbo.Log4NetLog ([Date],[Thread],[Level],[Logger],[Message],[Exception]) VALUES (@log_date, @thread, @log_level,@Logger, @message, @exception)
 RETURN 0
---ALTER TABLE [Tbl_Beneficiario]
-	--ADD FOREIGN KEY (IdCuenta) REFERENCES Tbl_Cuenta(Id);
-
---ALTER TABLE [Tbl_Beneficiario]
-	--ADD FOREIGN KEY (IdCuentaDestino) REFERENCES Tbl_Cuenta(Id);

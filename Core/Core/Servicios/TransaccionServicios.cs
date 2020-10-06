@@ -46,8 +46,8 @@ namespace Core.Servicios
             if (modelo.CuentaId != 0)
                 registro.CuentaId = modelo.CuentaId;
 
-            if (modelo.CajaId != 0)
-                registro.CajaId = modelo.CajaId;
+            if (modelo.OperacionCajaId != 0)
+                registro.OperacionCajaId = modelo.OperacionCajaId;
 
             _db.SaveChanges();
             log.Info("TransaccionServicio - Editar - Fin");

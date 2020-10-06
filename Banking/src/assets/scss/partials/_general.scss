@@ -130,10 +130,6 @@ p.text-muted {
         padding: 20px 25px;
         position: relative;
 
-        + .card-block,
-        + .card-body {
-        }
-
         h5 {
             margin-bottom: 0;
             color: #000;
@@ -881,3 +877,33 @@ p.text-muted {
     -webkit-font-smoothing: antialiased;
 }
 /* material icon for material datetime picker */
+
+.form-errors-section {
+    background-color: #FADBD8;
+    padding: 10px 5px 2px 5px;
+    display: flex;
+    flex-direction: row;
+    .icon-section {
+        padding: 2px 20px;
+        text-align: center;
+        .feather::before {
+            font-size: 50px;
+            color: #FF0000;
+        }
+    }
+    .errors-section {
+        flex-grow: 9;
+        padding-top: 6px;
+        text-align: left;
+        label {
+            font-size: 18px;
+            color: black;
+        }
+        ul {
+            margin-top: 5px;
+            li {
+                font-size: 15px;
+            }
+        }
+    }
+}

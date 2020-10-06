@@ -19,7 +19,7 @@ namespace Core.Servicios
         public void Crear(Tbl_Caja modelo)
         {
             log.Info("CajaServicio - Crear - Inicio");
-            modelo.Estado = 1;
+            modelo.Estado = true;
             _db.Tbl_Caja.Add(modelo);
 
             _db.SaveChanges();
@@ -65,7 +65,7 @@ namespace Core.Servicios
             log.Info("CajaServicio - Eliminar - Inicio");
             var registro = _db.Tbl_Caja.SingleOrDefault(x => x.Id == id);
 
-            registro.Estado = 0;
+            registro.Estado = false;
 
             _db.SaveChanges();
             log.Info("CajaServicio - Eliminar - Fin");

@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {Dropdown} from 'react-bootstrap';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Dropdown } from 'react-bootstrap';
 import windowSize from 'react-window-size';
 
 import NavSearch from './NavSearch';
@@ -29,20 +29,20 @@ class NavLeft extends Component {
                 <ul className="navbar-nav mr-auto">
                     <li><a href={DEMO.BLANK_LINK} className="full-screen" onClick={this.props.onFullScreen}><i className={iconFullScreen.join(' ')} /></a></li>
                     <li className={navItemClass.join(' ')}>
-                        <Dropdown alignRight={dropdownRightAlign}>
+                        <Dropdown alignRight={dropdownRightAlign} >
                             <Dropdown.Toggle variant={'link'} id="dropdown-basic">
-                                Dropdown
+                                Cuentas
                             </Dropdown.Toggle>
                             <ul>
-                                <Dropdown.Menu>
-                                    <li><a className="dropdown-item" href={DEMO.BLANK_LINK}>Action</a></li>
-                                    <li><a className="dropdown-item" href={DEMO.BLANK_LINK}>Another action</a></li>
-                                    <li><a className="dropdown-item" href={DEMO.BLANK_LINK}>Something else here</a></li>
+                                <Dropdown.Menu onClick={(e) => console.log(e)}>
+                                    <li key={1}><a className="dropdown-item active" href={DEMO.BLANK_LINK}>Tarjeta credito: ***-****-8798</a></li>
+                                    <li key={2}><a className="dropdown-item" href={DEMO.BLANK_LINK}>Cuenta debito: ***-****-3129</a></li>
                                 </Dropdown.Menu>
                             </ul>
                         </Dropdown>
                     </li>
-                    <li className="nav-item"><NavSearch/></li>
+                    <li className="nav-item"><NavSearch /></li>
+                    <label><b>Tarjeta credito:</b> ***-****-8798</label>
                 </ul>
             </Aux>
         );
@@ -58,7 +58,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onFullScreen: () => dispatch({type: actionTypes.FULL_SCREEN}),
+        onFullScreen: () => dispatch({ type: actionTypes.FULL_SCREEN }),
     }
 };
 

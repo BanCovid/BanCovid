@@ -37,7 +37,7 @@ namespace Core.Servicios
         public Tbl_Beneficiario Obtener(int id)
         {
             log.Info("BeneficiarioServicio - Obtener - Inicio");
-            var data = _db.Tbl_Beneficiario.SingleOrDefault(x => x.IdCuenta == id);
+            var data = _db.Tbl_Beneficiario.SingleOrDefault(x => x.CuentaId == id);
             log.Info("BeneficiarioServicio - Obtener - Fin");
             return data;
         }
@@ -45,7 +45,7 @@ namespace Core.Servicios
         public void Eliminar(int idCuenta , int idCuentaDestino)
         {
             log.Info("BeneficiarioServicio - Eliminar - Inicio");
-            var registro = _db.Tbl_Beneficiario.SingleOrDefault(x => x.IdCuenta == idCuenta && x.IdCuentaDestino == idCuentaDestino);
+            var registro = _db.Tbl_Beneficiario.SingleOrDefault(x => x.CuentaId == idCuenta && x.CuentaDestinoId== idCuentaDestino);
 
             registro.Estado = 0;
 
