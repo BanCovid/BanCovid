@@ -3,6 +3,7 @@ using Core.ModeloData;
 using Core.Modelos;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,17 +22,49 @@ namespace Core.Servicios
         public void Crear(Tbl_Usuario modelo)
         {
             log.Info("UsuariosServicio - Crear - Inicio");
-            modelo.Estado = 1;
-            modelo.Password = Seguridad.EncriptarContrasena(modelo.Password);
-            _db.Tbl_Usuario.Add(modelo);
 
-            _db.SaveChanges();
-            log.Info("UsuariosServicio - Crear - Fin");
+            DbContextTransaction transaccion = null;
+            try
+            {
+                transaccion = _db.Database.BeginTransaction();
+                modelo.Estado = 1;
+                modelo.FechaCreacion = DateTime.Now;
+                modelo.Password = Seguridad.EncriptarContrasena(modelo.Password);
+                _db.Tbl_Usuario.Add(modelo);
+                _db.SaveChanges();
+
+                if (modelo.Perfil_Id == 3)// Cliente
+                {
+                    _db.Tbl_Cliente.Add(new Tbl_Cliente
+                    {
+                        Id = modelo.Id,
+                        Direccion = "",
+                        FechaCreacion = DateTime.Now
+                    });
+
+                    _db.SaveChanges();
+                }
+                    
+                log.Info("UsuariosServicio - Crear - Fin");
+                transaccion.Commit();
+            }
+            catch (Exception ex)
+            {
+                if (transaccion != null) transaccion.Rollback();
+            }
+            finally
+            {
+                if (transaccion != null) transaccion.Dispose();
+            }
+            
         }
 
         public Tbl_Usuario InicioSesion(UsuarioModelo modelo)
         {
             log.Info("UsuariosServicio - InicioSesion - Inicio");
+
+            if (string.IsNullOrWhiteSpace(modelo.UserName))
+                throw new Exception("Usuario o contraseña incorrecta");
 
             var usuario = _db.Tbl_Usuario.SingleOrDefault(x => x.UserName == modelo.UserName);
 

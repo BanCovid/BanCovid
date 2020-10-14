@@ -1,14 +1,17 @@
 ﻿using Core.ModeloData;
 using Core.Modelos;
 using Core.Servicios;
+using Integracion.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace Integracion.Controllers
 {
+    //[EnableCors(origins: "*", headers: "*", methods: "*")]
     [RoutePrefix("api/Usuarios")]
     public class UsuariosController : ApiController
     {
@@ -27,7 +30,14 @@ namespace Integracion.Controllers
             {
                 _servicio.Crear(modelo);
 
-                return Ok(modelo);
+                return Ok(new UsuarioDTO
+                {
+                    Id = modelo.Id,
+                    Nombre = modelo.Nombre,
+                    Apellido = modelo.Apellido,
+                    UserName = modelo.UserName,
+                    FechaCreacion = modelo.FechaCreacion
+                });
             }
             catch (Exception ex)
             {
@@ -62,7 +72,18 @@ namespace Integracion.Controllers
             {
                 var list = _servicio.ObtenerTodos();
 
-                return Ok(list);
+                return Ok(list.Select(x => new UsuarioDTO 
+                {
+                    Id = x.Id,
+                    Nombre = x.Nombre,
+                    Apellido = x.Apellido,
+                    Cedula = x.Cedula,
+                    FechaCreacion = x.FechaCreacion,
+                    Perfil_Id = x.Perfil_Id,
+                    Telefono = x.Telefono,
+                    UserName = x.UserName,
+                    Estado = x.Estado
+                }));
             }
             catch (Exception ex)
             {
