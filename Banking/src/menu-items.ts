@@ -7,11 +7,19 @@ export default {
             icon: 'icon-navigation',
             children: [
                 {
-                    id: 'dashboard',
-                    title: 'Página principal',
+                    id: 'cuentas',
+                    title: 'Cuentas',
                     type: 'item',
-                    url: '/main',
+                    url: '/cuentas',
                     icon: 'feather icon-home',
+                    children: [
+                        {
+                            id: 'cuenta',
+                            title: 'SubCuenta',
+                            url: '/cuentas/:id',
+                            type: 'item'
+                        }
+                    ]
                 }
             ]
         },

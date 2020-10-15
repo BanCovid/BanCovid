@@ -109,7 +109,7 @@ strong {
 @keyframes anim-close-card {
     100% {
         opacity: 0.3;
-        transform: scale3d(.3, .3, .3);
+        transform: scale3d(0.3, 0.3, 0.3);
     }
 }
 
@@ -226,7 +226,7 @@ p.text-muted {
             height: 100%;
             display: flex;
             align-items: center;
-            background-color: rgba(256, 256, 256,0.7);
+            background-color: rgba(256, 256, 256, 0.7);
             z-index: 999;
 
             i {
@@ -316,7 +316,7 @@ p.text-muted {
         &:active,
         &:focus,
         &:hover {
-            background: transparentize($primary-color,0.9);
+            background: transparentize($primary-color, 0.9);
 
             > a {
                 background: transparent;
@@ -349,11 +349,11 @@ p.text-muted {
 
     .row {
         > [class^="col-"],
-         > .col {
+        > .col {
             padding-top: 0.75rem;
             padding-bottom: 0.75rem;
-            background-color: rgba(86, 61, 124, .15);
-            border: 1px solid rgba(86, 61, 124, .2);
+            background-color: rgba(86, 61, 124, 0.15);
+            border: 1px solid rgba(86, 61, 124, 0.2);
         }
     }
 
@@ -365,13 +365,13 @@ p.text-muted {
     .flex-items-middle,
     .flex-items-top {
         min-height: 6rem;
-        background-color: rgba(255, 0, 0, .1);
+        background-color: rgba(255, 0, 0, 0.1);
     }
 }
 
 .bd-example-row-flex-cols .row {
     min-height: 10rem;
-    background-color: rgba(255, 0, 0, .1);
+    background-color: rgba(255, 0, 0, 0.1);
 }
 
 /* Docs examples */
@@ -462,7 +462,8 @@ p.text-muted {
 
     pre code {
         font-size: inherit;
-        color: #333;     }
+        color: #333;
+    }
 }
 
 /* =======================================================================
@@ -525,7 +526,7 @@ p.text-muted {
     overflow: hidden;
     background: #282c34;
     transform-origin: 50% 0;
-    transform: scale(0.0);
+    transform: scale(0);
     transition: all 0.3s ease-in-out;
 }
 
@@ -566,12 +567,12 @@ p.text-muted {
     padding: 10px 15px;
     background: $primary-color;
     color: #fff;
-    box-shadow: 0 10px 20px 0 rgba(0,0,0,0.2);
+    box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.2);
     z-index: 1;
     white-space: nowrap;
 
     &:hover {
-        box-shadow: 0 10px 20px 0 rgba(0,0,0,0.2);
+        box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.2);
         color: #fff;
     }
 
@@ -735,7 +736,8 @@ p.text-muted {
         }
     }
 
-    button.owl-dot {}
+    button.owl-dot {
+    }
 }
 /* ================================    owl-carousel slider End  ===================== */
 /* ================================    Bootstrap tags input Start  ===================== */
@@ -759,7 +761,7 @@ p.text-muted {
             &:after {
                 content: "\e8f6";
                 padding: 0 2px;
-                font-family: 'feather' !important;
+                font-family: "feather" !important;
             }
         }
     }
@@ -855,14 +857,14 @@ p.text-muted {
 /* material icon for material datetime picker */
 /* fallback */
 @font-face {
-    font-family: 'Material Icons';
+    font-family: "Material Icons";
     font-style: normal;
     font-weight: 400;
-    src: url("https://fonts.gstatic.com/s/materialicons/v41/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2") format('woff2');
+    src: url("https://fonts.gstatic.com/s/materialicons/v41/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2") format("woff2");
 }
 
 .material-icons {
-    font-family: 'Material Icons';
+    font-family: "Material Icons";
     font-weight: normal;
     font-style: normal;
     font-size: 24px;
@@ -873,22 +875,25 @@ p.text-muted {
     white-space: nowrap;
     word-wrap: normal;
     direction: ltr;
-    -webkit-font-feature-settings: 'liga';
+    -webkit-font-feature-settings: "liga";
     -webkit-font-smoothing: antialiased;
 }
 /* material icon for material datetime picker */
 
 .form-errors-section {
-    background-color: #FADBD8;
+    background-color: #fadbd8;
     padding: 10px 5px 2px 5px;
     display: flex;
     flex-direction: row;
+    animation: fadeIn ease 1s;
+    -webkit-animation: fadeIn ease 1s;
+    -moz-animation: fadeIn ease 1s;
     .icon-section {
         padding: 2px 20px;
         text-align: center;
         .feather::before {
             font-size: 50px;
-            color: #FF0000;
+            color: #ff0000;
         }
     }
     .errors-section {
@@ -905,5 +910,32 @@ p.text-muted {
                 font-size: 15px;
             }
         }
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@-moz-keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
     }
 }
