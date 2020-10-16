@@ -1,6 +1,7 @@
 ﻿using Core.ModeloData;
 using Core.Modelos;
 using Core.Servicios;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace Integracion.Controllers
     public class TransaccionController : ApiController
     {
         private readonly TransaccionServicio _servicio;
+        private static readonly ILog log = LogManager.GetLogger(System.Environment.MachineName);
         public TransaccionController()
         {
             _servicio = new TransaccionServicio();
@@ -22,6 +24,7 @@ namespace Integracion.Controllers
         [Route("Interna")]
         public IHttpActionResult TransferenciaInterna(TransaccionModelo modelo)
         {
+            log.Info("Inicia el metodo ObtenerTodos - TransaccionController");
             try
             {
                 modelo.TipoTransaccion = TipoTransaccion.TransferenciaInterna;
@@ -33,6 +36,7 @@ namespace Integracion.Controllers
             }
             catch (Exception ex)
             {
+                log.Error($"Ha ocurrido un error: {ex}");
                 return BadRequest(ex.Message);
             }
         }
@@ -42,6 +46,7 @@ namespace Integracion.Controllers
         [Route("ObtenerTodos")]
         public IHttpActionResult ObtenerTodos(string noCuenta)
         {
+            log.Info("Inicia el metodo Obtener - TransaccionController");
             try
             {
                 var list = _servicio.ObtenerTodos(noCuenta);
@@ -64,6 +69,7 @@ namespace Integracion.Controllers
             }
             catch (Exception ex)
             {
+                log.Error($"Ha ocurrido un error: {ex}");
                 return BadRequest(ex.Message);
             }
         }
