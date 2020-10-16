@@ -49,10 +49,7 @@ namespace Core.Servicios
 
             if (!string.IsNullOrWhiteSpace(modelo.Descripcion))
                 registro.Descripcion = modelo.Descripcion;
-
-            if (modelo.FechaCreacion != null)
-                registro.FechaCreacion = modelo.FechaCreacion;
-
+           
             if (modelo.Monto != 0)
                 registro.Monto = modelo.Monto;
 
