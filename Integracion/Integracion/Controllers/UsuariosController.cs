@@ -76,6 +76,32 @@ namespace Integracion.Controllers
         }
 
         [HttpGet]
+        [Route("ObtenerPorCedula")]
+        public IHttpActionResult Usaurio(string cedula)
+        {
+            log.Info("Inicia el metodo IniciarSesion - UsuariosController");
+            try
+            {
+                var usuario = _servicio.Obtener(cedula);
+
+                return Ok(new UsuarioDTO
+                {
+                    Id = usuario.Id,
+                    Nombre = usuario.Nombre,
+                    UserName = usuario.UserName,
+                    Apellido = usuario.Apellido,
+                    Cedula = usuario.Cedula,
+                    Telefono = usuario.Telefono
+                });
+            }
+            catch (Exception ex)
+            {
+                log.Error($"Ha ocurrido un error: {ex}");
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet]
         [Route("ObtenerTodos")]
         public IHttpActionResult ObtenerTodos()
         {

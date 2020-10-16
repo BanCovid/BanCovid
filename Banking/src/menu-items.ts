@@ -34,7 +34,7 @@ export default {
                     title: 'Entre mis cuentas',
                     type: 'item',
                     icon: 'feather icon-box',
-                    url: '/basic/button'
+                    url: '/transaccion_mis_cuentas'
                 },
                 {
                     id: 'another',

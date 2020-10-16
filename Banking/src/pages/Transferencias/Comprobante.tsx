@@ -51,7 +51,7 @@ const Comprobante: React.FC<IComprobanteProps> = ({ miCuenta, cuentaDestino, mon
                 minHeight: '200px',
             }}>
             <Row style={{ justifyContent: 'center', marginTop: '50px' }}>
-                <Col md={4}>
+                <Col md={5}>
                     <Card>
                         <Card.Header>
                             <Card.Title as="h5">COMPROBANTE</Card.Title>

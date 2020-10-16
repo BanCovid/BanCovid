@@ -40,7 +40,7 @@ const MisCuentas2 = () => {
     }, []);
 
     const handleInputChange = ({ target }: any) => {
-        if (target.id === 'NoCuenta') {
+        if (target.id === 'Cuenta') {
             cuentasService.obtener(target.value)
                 .then((data) => {
                     setMiCuenta(data);
@@ -99,6 +99,10 @@ const MisCuentas2 = () => {
                     name: 'Cuentas',
                     path: '/cuentas',
                     isActive: true
+                }, {
+                    name: `Transferencia entre mis cuentas`,
+                    path: `/transaccion_mis_cuentas`,
+                    isActive: true
                 }]}
             />
             <Aux>
@@ -114,9 +118,9 @@ const MisCuentas2 = () => {
                                         <Col md={6}>
                                             <h5>Información de mi cuenta</h5>
                                             <hr />
-                                            <Form.Group controlId="NoCuenta">
+                                            <Form.Group controlId="Cuenta">
                                                 <Form.Label>Mi Cuenta</Form.Label>
-                                                <Form.Control as="select" onChange={handleInputChange} value={formModel.CuentaDestino}>
+                                                <Form.Control as="select" onChange={handleInputChange} value={formModel.Cuenta}>
                                                     <option value="-1" disabled>Selecciona una cuenta</option>
                                                     {misCuentas.map(item => (
                                                         <option key={item.NoCuenta} value={item.NoCuenta}>No. Cuenta {item.NoCuenta}</option>
@@ -136,11 +140,11 @@ const MisCuentas2 = () => {
                                         <Col md={6}>
                                             <h5>Información de cuenta destino</h5>
                                             <hr />
-                                            <Form.Group controlId="CuentaDestino">
+                                            <Form.Group controlId="CuentaDestino" style={{ marginBottom: '2.2rem' }}>
                                                 <Form.Label>Cuenta a Transferir</Form.Label>
                                                 <Form.Control as="select" onChange={handleInputChange} value={formModel.CuentaDestino} disabled={misCuentas2.length === 0}>
                                                     <option value="-1" disabled>Selecciona una cuenta</option>
-                                                    {misCuentas.map(item => (
+                                                    {misCuentas2.map(item => (
                                                         <option key={item.NoCuenta} value={item.NoCuenta}>No. Cuenta {item.NoCuenta}</option>
                                                     ))}
                                                 </Form.Control>

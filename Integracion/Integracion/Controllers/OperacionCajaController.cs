@@ -1,4 +1,5 @@
 ﻿using Core.ModeloData;
+using Core.Modelos;
 using Core.Servicios;
 using log4net;
 using System;
@@ -28,6 +29,41 @@ namespace Integracion.Controllers
             try
             {
                 _servicio.Crear(modelo);
+                log.Info("Finaliza el metodo Crear - OperacionCajaController");
+                return Ok(modelo);
+            }
+            catch (Exception ex)
+            {
+                log.Error($"Ha ocurrido un error: {ex}");
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpPost]
+        [Route("Entrada")]
+        public IHttpActionResult Entrada(OperacionCajaES modelo)
+        {
+            log.Info("Inicia el metodo Crear - OperacionCajaController");
+            try
+            {
+                _servicio.Entrada(modelo);
+                log.Info("Finaliza el metodo Crear - OperacionCajaController");
+                return Ok(modelo);
+            }
+            catch (Exception ex)
+            {
+                log.Error($"Ha ocurrido un error: {ex}");
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route("Salida")]
+        public IHttpActionResult Salida(OperacionCajaES modelo)
+        {
+            log.Info("Inicia el metodo Crear - OperacionCajaController");
+            try
+            {
+                _servicio.Salida(modelo);
                 log.Info("Finaliza el metodo Crear - OperacionCajaController");
                 return Ok(modelo);
             }
