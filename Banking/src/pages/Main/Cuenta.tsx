@@ -176,9 +176,9 @@ const Cuenta: React.FC = () => {
                             <Card.Body className='px-0 py-2'>
                                 <Button variant="link" onClick={() => history.push(`/cuentas/${id}/expreso`)} ><i className="feather icon-zap" />Expreso</Button>
                                 <br />
-                                <Button variant="link"><i className="feather icon-users" />Cuenta de beneficiario</Button>
+                                <Button variant="link" onClick={() => history.push(`/cuentas/${id}/beneficiarios`)}><i className="feather icon-users" />Cuenta de beneficiario</Button>
                                 <br />
-                                <Button variant="link"><i className="feather icon-credit-card" />Entre mis cuentas</Button>
+                                <Button variant="link" onClick={() => history.push(`/cuentas/${id}/miscuentas`)}><i className="feather icon-credit-card" />Entre mis cuentas</Button>
                                 <br />
                                 <Button variant="link"><i className="feather icon-home" />Otros bancos</Button>
                             </Card.Body>

@@ -17,6 +17,7 @@ import DEMO from '../../store/constant';
 const Beneficiarios = () => {
 
     const [show, setShow] = useState<boolean>(false);
+    const [edit, setEdit] = useState<boolean>(false);
     const [errors, setErrors] = useState<string[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const [formModel, setFormModel] = useState<BeneficiarioModel>({
@@ -64,6 +65,31 @@ const Beneficiarios = () => {
     const onSubmit = (e: any) => {
         e.preventDefault();
 
+        if (edit) {
+            beneficiariosService.editar(formModel)
+                .then(() => {
+                    setShow(true);
+                    setTimeout(() => {
+                        setFormModel({
+                            CuentaDestino: '',
+                            Alias: '',
+                            Titular: '',
+                            Aprobado: false
+                        } as BeneficiarioModel);
+                        cargarBeneficiarios();
+                        setEdit(false);
+                    }, 1000);
+                })
+                .catch(res => {
+                    if (res.response.data && res.response.data.Message)
+                        setErrors([res.response.data.Message]);
+                })
+                .finally(() => setTimeout(() => {
+                    setLoading(false)
+                }, 2000));
+            return;
+        }
+
         if (!formModel.CuentaDestino)
             setErrors(['Debe seleccionar una cuenta para agregar']);
 
@@ -82,7 +108,7 @@ const Beneficiarios = () => {
                             Aprobado: false
                         } as BeneficiarioModel);
                         cargarBeneficiarios();
-                    }, 2000);
+                    }, 1000);
                 })
                 .catch(res => {
                     if (res.response.data && res.response.data.Message)
@@ -148,8 +174,9 @@ const Beneficiarios = () => {
                                                                 CuentaDestino: item.CuentaDestino,
                                                                 Alias: item.Alias,
                                                                 Titular: item.Titular,
-                                                                Aprobado: false
+                                                                Aprobado: true
                                                             } as BeneficiarioModel);
+                                                            setEdit(true);
                                                         }}
                                                         href={DEMO.BLANK_LINK}
                                                         className="label theme-bg text-white f-12"
@@ -178,7 +205,7 @@ const Beneficiarios = () => {
                                         <Col md={12}>
                                             <Form.Group controlId="CuentaDestino">
                                                 <Form.Label>No. Cuenta</Form.Label>
-                                                <Form.Control onChange={handleInputChange} value={formModel.CuentaDestino} type="number" onFocus={onFocusCuenta} onBlur={onChangeCuenta} />
+                                                <Form.Control onChange={handleInputChange} value={formModel.CuentaDestino} type="number" onFocus={onFocusCuenta} onBlur={onChangeCuenta} disabled={edit} />
                                             </Form.Group>
                                             <Form.Group controlId="Titular">
                                                 <Form.Label>Titular de la cuenta</Form.Label>
@@ -189,6 +216,23 @@ const Beneficiarios = () => {
                                                 <Form.Control onChange={handleInputChange} value={formModel.Alias} />
                                             </Form.Group>
                                             <Form.Group style={{ textAlign: 'right' }}>
+                                                {(edit && (
+                                                    <Button
+                                                        variant="light"
+                                                        disabled={loading}
+                                                        onClick={() => {
+                                                            setFormModel({
+                                                                CuentaDestino: '',
+                                                                Alias: '',
+                                                                Titular: '',
+                                                                Aprobado: false
+                                                            } as BeneficiarioModel);
+                                                            setEdit(false);
+                                                        }}
+                                                    >
+                                                        <UcFirst text={"Cancel"} />
+                                                    </Button>
+                                                ))}
                                                 <Button type="submit" variant="secondary" disabled={loading}>
                                                     <Spinner
                                                         as="span"
@@ -235,7 +279,12 @@ const Beneficiarios = () => {
                                 <strong className="mr-auto">BanCovid</strong>
                                 <small>justo ahora</small>
                             </Toast.Header>
-                            <Toast.Body>El beneficiario se ha creado correctamente.</Toast.Body>
+                            <Toast.Body>
+                                {edit ?
+                                    "El beneficiario se ha editado correctamente." :
+                                    "El beneficiario se ha creado correctamente."
+                                }
+                            </Toast.Body>
                         </Toast>
                     </div>
                 </div>

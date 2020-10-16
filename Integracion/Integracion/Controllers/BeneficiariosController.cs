@@ -65,16 +65,16 @@ namespace Integracion.Controllers
             }
         }
 
-        [HttpGet]
-        [Route("Obtener/{id}")]
-        public IHttpActionResult Obtener(int id)
+        [HttpPut]
+        [Route("Editar")]
+        public IHttpActionResult Editar(BeneficiarioModelo modelo)
         {
-            log.Info("Inicia el metodo Obtener - BeneficiariosController");
+            log.Info("Inicia el metodo Editar - BeneficiariosController");
             try
             {
-                var item = _servicio.Obtener(id);
-                log.Info("Finaliza el metodo Obtener - BeneficiariosController");
-                return Ok(item);
+                _servicio.Editar(modelo);
+                log.Info("Finaliza el metodo Editar - BeneficiariosController");
+                return Ok(true);
             }
             catch (Exception ex)
             {

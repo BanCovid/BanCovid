@@ -64,6 +64,26 @@ namespace Core.Servicios
             return data;
         }
 
+        public void Editar(BeneficiarioModelo modelo)
+        {
+            log.Info("BeneficiarioServicio - Editar - Inicio");
+            var cuenta = _db.Tbl_Cuenta.SingleOrDefault(x => x.NoCuenta == modelo.CuentaDestino.Trim());
+
+            if (cuenta == null)
+                throw new Exception("La cuenta no existe");
+
+            var beneficiario = _db.Tbl_Beneficiario.SingleOrDefault(x => x.ClienteId == modelo.ClienteId &&
+                x.CuentaDestinoId == cuenta.Id);
+
+            if (beneficiario == null)
+                throw new Exception("El beneficiario no existe");
+
+            beneficiario.Alias = modelo.Alias;
+
+            log.Info("BeneficiarioServicio - Editar - Fin");
+            _db.SaveChanges();
+        }
+
         public void Eliminar(int idCuenta , int idCuentaDestino)
         {
             log.Info("BeneficiarioServicio - Eliminar - Inicio");

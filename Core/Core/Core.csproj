@@ -119,6 +119,9 @@
     <Compile Include="ModeloData\Tbl_Perfil.cs">
       <DependentUpon>Contexto.tt</DependentUpon>
     </Compile>
+    <Compile Include="ModeloData\Tbl_Sucursal.cs">
+      <DependentUpon>Contexto.tt</DependentUpon>
+    </Compile>
     <Compile Include="ModeloData\Tbl_TipoTransaccion.cs">
       <DependentUpon>Contexto.tt</DependentUpon>
     </Compile>
@@ -157,8 +160,8 @@
     </Content>
     <Content Include="ModeloData\Contexto.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Contexto.Context.cs</LastGenOutput>
       <DependentUpon>Contexto.edmx</DependentUpon>
+      <LastGenOutput>Contexto.Context.cs</LastGenOutput>
     </Content>
     <Content Include="ModeloData\Contexto.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -182,16 +185,14 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="ModeloData\Contexto.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Contexto.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.Config" />
     <None Include="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <EntityDeploy Include="ModeloData\Contexto.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Contexto.Designer.cs</LastGenOutput>
+    </EntityDeploy>
     <None Include="ModeloData\Contexto.edmx.diagram">
       <DependentUpon>Contexto.edmx</DependentUpon>
     </None>
