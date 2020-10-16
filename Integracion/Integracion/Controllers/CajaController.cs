@@ -80,7 +80,12 @@ namespace Integracion.Controllers
             {
                 var item = _servicio.Obtener(id);
                 log.Info("Finaliza el metodo Obtener - CajaController");
-                return Ok(item);
+                return Ok(new
+                {
+                    item.Descripcion,
+                    item.Monto,
+                    item.Estado
+                });
             }
             catch (Exception ex)
             {
