@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/da146779-6a45-45cd-8531-37a0dcbee5d7/resourceGroups/P3/providers/Microsoft.Web/sites/bancovidweb",
+    "appService.deploySubpath": "."
+}
