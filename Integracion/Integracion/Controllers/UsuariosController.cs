@@ -57,10 +57,15 @@ namespace Integracion.Controllers
             try
             {
                 var usuario = _servicio.InicioSesion(modelo);
-                log.Info("Finaliza el metodo IniciarSesion - UsuariosController");
-                return Ok(new
+
+                return Ok(new UsuarioDTO
                 {
-                    UsuarioId = usuario.Id
+                    Id = usuario.Id,
+                    Nombre = usuario.Nombre,
+                    UserName = usuario.UserName,
+                    Apellido = usuario.Apellido,
+                    Cedula = usuario.Cedula,
+                    Telefono = usuario.Telefono
                 });
             }
             catch (Exception ex)

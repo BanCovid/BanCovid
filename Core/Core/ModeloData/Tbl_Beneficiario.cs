@@ -14,13 +14,14 @@ namespace Core.ModeloData
     
     public partial class Tbl_Beneficiario
     {
-        public int CuentaId { get; set; }
+        public int ClienteId { get; set; }
+        public string Alias { get; set; }
         public int CuentaDestinoId { get; set; }
         public System.DateTime FechaCreacion { get; set; }
         public short Estado { get; set; }
     
+        public virtual Tbl_Usuario Tbl_Usuario { get; set; }
         public virtual Tbl_Cuenta Tbl_Cuenta { get; set; }
-        public virtual Tbl_Cuenta Tbl_Cuenta1 { get; set; }
         public virtual Tbl_BeneficiarioEstado Tbl_BeneficiarioEstado { get; set; }
     }
 }

@@ -174,7 +174,7 @@
     <Compile Include="Controllers\BeneficiariosEstadoController.cs" />
     <Compile Include="Controllers\CajaController.cs" />
     <Compile Include="Controllers\ClienteController.cs" />
-    <Compile Include="Controllers\CuentaController.cs" />
+    <Compile Include="Controllers\CuentasController.cs" />
     <Compile Include="Controllers\EstadosUsuarioController.cs" />
     <Compile Include="Controllers\OperacionCajaController.cs" />
     <Compile Include="Controllers\OperacionCajaTipoController.cs" />
@@ -185,6 +185,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CuentaDTO.cs" />
     <Compile Include="Models\UsuarioDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

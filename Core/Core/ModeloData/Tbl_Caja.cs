@@ -28,5 +28,6 @@ namespace Core.ModeloData
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_OperacionCaja> Tbl_OperacionCaja { get; set; }
+        public virtual Tbl_Usuario Tbl_Usuario { get; set; }
     }
 }

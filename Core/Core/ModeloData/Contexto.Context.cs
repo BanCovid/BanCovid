@@ -26,7 +26,6 @@ namespace Core.ModeloData
         }
     
         public virtual DbSet<Log4NetLog> Log4NetLog { get; set; }
-        public virtual DbSet<Tbl_Beneficiario> Tbl_Beneficiario { get; set; }
         public virtual DbSet<Tbl_BeneficiarioEstado> Tbl_BeneficiarioEstado { get; set; }
         public virtual DbSet<Tbl_Caja> Tbl_Caja { get; set; }
         public virtual DbSet<Tbl_Cliente> Tbl_Cliente { get; set; }
@@ -39,5 +38,6 @@ namespace Core.ModeloData
         public virtual DbSet<Tbl_TipoTransaccion> Tbl_TipoTransaccion { get; set; }
         public virtual DbSet<Tbl_Transaccion> Tbl_Transaccion { get; set; }
         public virtual DbSet<Tbl_Usuario> Tbl_Usuario { get; set; }
+        public virtual DbSet<Tbl_Beneficiario> Tbl_Beneficiario { get; set; }
     }
 }

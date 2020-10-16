@@ -19,6 +19,22 @@ namespace Integracion.Controllers
             _servicio = new CajaServicio();
         }
 
+        //[HttpGet]
+        //[Route("Estadisticas")]
+        //public IHttpActionResult Estadisticas(string cuentaNo)
+        //{
+        //    try
+        //    {
+        //        //_servicio.Crear();
+
+        //        return Ok(modelo);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest(ex.Message);
+        //    }
+        //}
+
         [HttpPost]
         [Route("Crear")]
         public IHttpActionResult Crear(Tbl_Caja modelo)

@@ -1,4 +1,5 @@
 ﻿using Core.ModeloData;
+using Core.Modelos;
 using Core.Servicios;
 using log4net;
 using System;
@@ -19,16 +20,19 @@ namespace Integracion.Controllers
             _servicio = new TransaccionServicio();
         }
 
-        [HttpGet]
-        [Route("ObtenerTodos")]
-        public IHttpActionResult ObtenerTodos()
+        [HttpPost]
+        [Route("Interna")]
+        public IHttpActionResult TransferenciaInterna(TransaccionModelo modelo)
         {
             log.Info("Inicia el metodo ObtenerTodos - TransaccionController");
             try
             {
-                var list = _servicio.ObtenerTodos();
-                log.Info("Finaliza el metodo ObtenerTodos - TransaccionController");
-                return Ok(list);
+                modelo.TipoTransaccion = TipoTransaccion.TransferenciaInterna;
+                if (string.IsNullOrWhiteSpace(modelo.Concepto))
+                    modelo.Concepto = "Transferencia interna a " + modelo.CuentaDestino;
+                _servicio.Crear(modelo);
+
+                return Ok(true);
             }
             catch (Exception ex)
             {
@@ -37,16 +41,31 @@ namespace Integracion.Controllers
             }
         }
 
+
         [HttpGet]
-        [Route("Obtener/{id}")]
-        public IHttpActionResult Obtener(int id)
+        [Route("ObtenerTodos")]
+        public IHttpActionResult ObtenerTodos(string noCuenta)
         {
             log.Info("Inicia el metodo Obtener - TransaccionController");
             try
             {
-                var item = _servicio.Obtener(id);
-                log.Info("Finaliza el metodo Obtener - TransaccionController");
-                return Ok(item);
+                var list = _servicio.ObtenerTodos(noCuenta);
+
+                return Ok(list.Select(x => new TransaccionModelo 
+                {
+                    Cuenta = x.Tbl_Cuenta.NoCuenta,
+                    CuentaDestino = x.Tbl_Cuenta1.NoCuenta,
+                    Concepto = x.Concepto,
+                    TipoTransaccion = (TipoTransaccion)x.TipoTransaccionId,
+                    Monto = x.Monto,
+                    Estado = x.Estado,
+                    Titular = (noCuenta == x.Tbl_Cuenta.NoCuenta) ? 
+                                x.Tbl_Cuenta1.Tbl_Cliente.Tbl_Usuario.Nombre + " " + 
+                                x.Tbl_Cuenta1.Tbl_Cliente.Tbl_Usuario.Apellido :
+                                x.Tbl_Cuenta.Tbl_Cliente.Tbl_Usuario.Nombre + " " +
+                                x.Tbl_Cuenta.Tbl_Cliente.Tbl_Usuario.Apellido,
+                    Fecha = x.Fecha
+                }));
             }
             catch (Exception ex)
             {
@@ -55,23 +74,6 @@ namespace Integracion.Controllers
             }
         }
 
-        [HttpPut]
-        [Route("Editar")]
-        public IHttpActionResult Editar(Tbl_Transaccion modelo)
-        {
-            log.Info("Inicia el metodo Editar - TransaccionController");
-            try
-            {
-                _servicio.Editar(modelo);
-                log.Info("Finaliza el metodo Editar - TransaccionController");
-                return Ok(modelo);
-            }
-            catch (Exception ex)
-            {
-                log.Error($"Ha ocurrido un error: {ex}");
-                return BadRequest(ex.Message);
-            }
-        }
 
     }
 }
