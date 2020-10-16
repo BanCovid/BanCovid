@@ -30,7 +30,7 @@ namespace Integracion.Controllers
             {
                 _servicio.Crear(modelo);
                 log.Info("Finaliza el metodo Crear - OperacionCajaController");
-                return Ok(modelo);
+                return Ok(true);
             }
             catch (Exception ex)
             {

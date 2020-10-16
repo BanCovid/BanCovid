@@ -3,6 +3,7 @@ using Core.Modelos;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,6 +33,7 @@ namespace Core.Servicios
             DbContextTransaction transaccion = null;
             try
             {
+                transaccion = _db.Database.BeginTransaction();
                 modelo.Estado = true;
                 modelo.Fecha = DateTime.Now;
 
@@ -40,11 +42,12 @@ namespace Core.Servicios
                 if (caja == null)
                     throw new Exception("La cuenta no existe");
 
+                var currentDate = DateTime.Now.Date;
                 if (modelo.TipoId == (short)TipoOperacion.AperturaCaja)
                 {
                     var cajaOp = _db.Tbl_OperacionCaja.SingleOrDefault(x => x.CajaId == modelo.CajaId
                                     && x.TipoId == (short)TipoOperacion.AperturaCaja
-                                    && x.Fecha.Date == DateTime.Now.Date);
+                                    && EntityFunctions.TruncateTime(x.Fecha) == currentDate);
                     if (cajaOp != null)
                         throw new Exception("La caja ya se encuentra abierta");
                     caja.Estado = true;
@@ -53,20 +56,19 @@ namespace Core.Servicios
                 else if (modelo.TipoId == (short)TipoOperacion.CierreCaja)
                 {
                     decimal entradasDeHoy = 0, salidasDeHoy = 0;
-
                     _db.Tbl_OperacionCaja
                                     .Where(x => 
                                         x.CajaId == modelo.CajaId && 
-                                        x.TipoId == (short)TipoOperacion.EntradaEfectivo && 
-                                        x.Fecha.Date == DateTime.Now.Date)
+                                        x.TipoId == (short)TipoOperacion.EntradaEfectivo &&
+                                        EntityFunctions.TruncateTime(x.Fecha) == currentDate)
                                     .ToList()
                                     .Aggregate(entradasDeHoy, (x, y) => entradasDeHoy + y.Monto);
 
                     _db.Tbl_OperacionCaja
                                     .Where(x => 
                                         x.CajaId == modelo.CajaId && 
-                                        x.TipoId == (short)TipoOperacion.SalidaEfectivo && 
-                                        x.Fecha.Date == DateTime.Now.Date)
+                                        x.TipoId == (short)TipoOperacion.SalidaEfectivo &&
+                                        EntityFunctions.TruncateTime(x.Fecha) == currentDate)
                                     .ToList()
                                     .Aggregate(salidasDeHoy, (x, y) => entradasDeHoy + y.Monto);
                     
