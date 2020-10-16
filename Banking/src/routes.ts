@@ -11,6 +11,7 @@ const TransferenciaExpreso = React.lazy(() => import('./pages/Transferencias/Exp
 const Beneficiarios = React.lazy(() => import('./pages/Beneficiarios/Beneficiarios'));
 const TBeneficiario = React.lazy(() => import('./pages/Transferencias/Beneficiario'));
 const TMisCuentas = React.lazy(() => import('./pages/Transferencias/MisCuentas'));
+const TMisCuentas2 = React.lazy(() => import('./pages/Transferencias/MisCuentas2'));
 
 const routes = [
     { path: '/cuentas', exact: true, name: 'Cuentas', component: Main },
@@ -18,7 +19,8 @@ const routes = [
     { path: '/cuentas/:id/expreso', exact: true, name: 'Transferencia Expreso', component: TransferenciaExpreso },
     { path: '/cuentas/:id/beneficiarios', exact: true, name: 'Beneficiarios', component: TBeneficiario },
     { path: '/cuentas/:id/miscuentas', exact: true, name: 'Transferencia entre mis cuentas', component: TMisCuentas },
-    { path: '/beneficiarios', exact: true, name: 'Beneficiarios', component: Beneficiarios }
+    { path: '/beneficiarios', exact: true, name: 'Beneficiarios', component: Beneficiarios },
+    { path: '/transaccion_mis_cuentas', exact: true, name: 'Beneficiarios', component: TMisCuentas2 }
 ];
 
 export default routes;

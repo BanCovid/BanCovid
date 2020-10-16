@@ -133,6 +133,7 @@
     </Compile>
     <Compile Include="Modelos\BeneficiarioModelo.cs" />
     <Compile Include="Modelos\CuentaEstadisticaModelo.cs" />
+    <Compile Include="Modelos\OperacionCajaES.cs" />
     <Compile Include="Modelos\TransaccionModelo.cs" />
     <Compile Include="Modelos\UsuarioModelo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

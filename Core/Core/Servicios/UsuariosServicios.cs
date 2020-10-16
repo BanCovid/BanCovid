@@ -116,6 +116,13 @@ namespace Core.Servicios
             log.Info("UsuariosServicio - Obtener - Fin");
             return data;
         }
+        public Tbl_Usuario Obtener(string cedula)
+        {
+            log.Info("UsuariosServicio - Obtener - Inicio");
+            var data = _db.Tbl_Usuario.SingleOrDefault(x => x.Cedula == cedula.Trim());
+            log.Info("UsuariosServicio - Obtener - Fin");
+            return data;
+        }
 
         public void Editar(Tbl_Usuario modelo)
         {

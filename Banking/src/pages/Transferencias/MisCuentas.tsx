@@ -134,7 +134,7 @@ const MisCuentas = () => {
                                         <Col md={6}>
                                             <h5>Información de cuenta destino</h5>
                                             <hr />
-                                            <Form.Group controlId="CuentaDestino">
+                                            <Form.Group controlId="CuentaDestino" style={{ marginBottom: '2.2rem' }}>
                                                 <Form.Label>Cuenta a Transferir</Form.Label>
                                                 <Form.Control as="select" onChange={handleInputChange} value={formModel.CuentaDestino}>
                                                     <option value="-1" disabled>Selecciona una cuenta</option>
