@@ -48,6 +48,7 @@ namespace Core.Servicios
                     if (cajaOp != null)
                         throw new Exception("La caja ya se encuentra abierta");
                     caja.Estado = true;
+                    modelo.Monto = caja.Monto;
                 }
                 else if (modelo.TipoId == (short)TipoOperacion.CierreCaja)
                 {
@@ -117,6 +118,7 @@ namespace Core.Servicios
 
                 _db.SaveChanges();
 
+                cuenta.Monto += modelo.Monto;
                 _db.Tbl_Transaccion.Add(new Tbl_Transaccion
                 {
                     Monto = modelo.Monto,
@@ -174,6 +176,7 @@ namespace Core.Servicios
 
                 _db.SaveChanges();
 
+                cuenta.Monto -= modelo.Monto;
                 _db.Tbl_Transaccion.Add(new Tbl_Transaccion
                 {
                     Monto = modelo.Monto,

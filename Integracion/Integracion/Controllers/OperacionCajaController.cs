@@ -38,6 +38,7 @@ namespace Integracion.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
         [HttpPost]
         [Route("Entrada")]
         public IHttpActionResult Entrada(OperacionCajaES modelo)

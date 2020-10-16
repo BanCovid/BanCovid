@@ -76,8 +76,8 @@ namespace Integracion.Controllers
         }
 
         [HttpGet]
-        [Route("ObtenerPorCedula")]
-        public IHttpActionResult Usaurio(string cedula)
+        [Route("ObtenerPorCedula/{cedula}")]
+        public IHttpActionResult ObtenerPorCedula(string cedula)
         {
             log.Info("Inicia el metodo IniciarSesion - UsuariosController");
             try
