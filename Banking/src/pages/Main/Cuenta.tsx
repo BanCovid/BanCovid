@@ -121,15 +121,26 @@ const Cuenta: React.FC = () => {
                                             <tr className="unread" key={index}>
                                                 <td>
                                                     <h6 className="mb-1">{item.Concepto}</h6>
-                                                    <p className="m-0">{item.Titular}</p>
+                                                    <p className="m-0">{(item.TitularDestino) ? item.TitularDestino : item.Titular}</p>
                                                 </td>
-                                                <td>Cuenta No.{(item.Cuenta === id) ? item.CuentaDestino : item.Cuenta}</td>
+                                                <td>{item.CuentaDestino ? `Cuenta No.${(item.Cuenta === id) ? item.CuentaDestino : item.Cuenta}` : 'Cajero'}</td>
                                                 <td>
-                                                    {item.Cuenta === id ? (
+                                                    {item.TipoTransaccion === 1 && (
+                                                        moneyFormat(item.Monto)
+                                                    )}
+                                                    {item.TipoTransaccion === 2 && (
                                                         <label className="text-c-red">{moneyFormat(item.Monto)}</label>
-                                                    ) : (
-                                                            moneyFormat(item.Monto)
-                                                        )}
+                                                    )}
+                                                    {item.TipoTransaccion === 3 && (
+                                                        <>
+                                                            {item.Cuenta === id ? (
+                                                                <label className="text-c-red">{moneyFormat(item.Monto)}</label>
+                                                            ) : (
+                                                                    moneyFormat(item.Monto)
+                                                                )}
+                                                        </>
+                                                    )}
+
                                                 </td>
                                                 <td>
                                                     <h6 className="text-muted">
@@ -155,11 +166,21 @@ const Cuenta: React.FC = () => {
                                                     {item.Estado === 2 && (
                                                         <label className="label theme-bg2 text-white f-12">Realizada</label>
                                                     )}
-                                                    {item.Cuenta === id ? (
+                                                    {item.TipoTransaccion === 1 && (
+                                                        <label className="label theme-bg text-white f-12">Deposito</label>
+                                                    )}
+                                                    {item.TipoTransaccion === 2 && (
                                                         <label className="label theme-bg1 text-white f-12" style={{ minWidth: '70px', textAlign: 'center' }}>Retiro</label>
-                                                    ) : (
-                                                            <label className="label theme-bg text-white f-12">Deposito</label>
-                                                        )}
+                                                    )}
+                                                    {item.TipoTransaccion === 3 && (
+                                                        <>
+                                                            {item.Cuenta === id ? (
+                                                                <label className="label theme-bg1 text-white f-12" style={{ minWidth: '70px', textAlign: 'center' }}>Retiro</label>
+                                                            ) : (
+                                                                    <label className="label theme-bg text-white f-12">Deposito</label>
+                                                                )}
+                                                        </>
+                                                    )}
                                                 </td>
                                             </tr>
                                         ))}

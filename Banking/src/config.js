@@ -1,6 +1,6 @@
 export default {
     defaultPath: '/cuentas',
-    basename: '', // only at build time to set, like /datta-able
+    basename: '/MyBanCovid', // only at build time to set, like /datta-able
     layout: 'vertical', // vertical, horizontal (not available in lite version)
     preLayout: null, // (not available in lite version)
     collapseMenu: false, // mini-menu

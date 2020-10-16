@@ -27,10 +27,10 @@ const authService = (() => {
             });
         },
         signOut() {
-            isAuthenticated = false;
-            userData = {} as AuthModel;
+            this.isAuthenticated = false;
+            this.userData = {} as AuthModel;
             localStorage.removeItem('current_user');
-            window.location.reload(false);
+            //window.location.reload(false);
         }
     }
 })();
