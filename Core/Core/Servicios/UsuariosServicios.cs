@@ -133,7 +133,7 @@ namespace Core.Servicios
                 registro.UserName = modelo.UserName;
 
             if (modelo.Password != null)
-                registro.Password = modelo.Password;
+                registro.Password = Seguridad.EncriptarContrasena(modelo.Password);
 
             if (!string.IsNullOrWhiteSpace(modelo.Nombre))
                 registro.Nombre = modelo.Nombre;
@@ -143,12 +143,6 @@ namespace Core.Servicios
 
             if (!string.IsNullOrWhiteSpace(modelo.Telefono))
                 registro.Telefono = modelo.Telefono;
-
-            if (!string.IsNullOrWhiteSpace(modelo.Nombre))
-                registro.Nombre = modelo.Nombre;
-
-            if (modelo.Perfil_Id != 0)
-                registro.Perfil_Id = modelo.Perfil_Id;
 
             _db.SaveChanges();
             log.Info("UsuariosServicio - Editar - Fin");
