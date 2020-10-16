@@ -22,6 +22,7 @@ namespace Core.ModeloData
         public Nullable<int> CuentaDestinoId { get; set; }
         public Nullable<long> OperacionCajaId { get; set; }
         public short Estado { get; set; }
+        public string Concepto { get; set; }
     
         public virtual Tbl_Cuenta Tbl_Cuenta { get; set; }
         public virtual Tbl_Cuenta Tbl_Cuenta1 { get; set; }

@@ -17,10 +17,9 @@ namespace Core.ModeloData
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Tbl_Cuenta()
         {
-            this.Tbl_Beneficiario = new HashSet<Tbl_Beneficiario>();
-            this.Tbl_Beneficiario1 = new HashSet<Tbl_Beneficiario>();
             this.Tbl_Transaccion = new HashSet<Tbl_Transaccion>();
             this.Tbl_Transaccion1 = new HashSet<Tbl_Transaccion>();
+            this.Tbl_Beneficiario = new HashSet<Tbl_Beneficiario>();
         }
     
         public int Id { get; set; }
@@ -28,15 +27,14 @@ namespace Core.ModeloData
         public int ClienteId { get; set; }
         public decimal Monto { get; set; }
         public System.DateTime FechaCreacion { get; set; }
+        public decimal MontoAlCorte { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tbl_Beneficiario> Tbl_Beneficiario { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tbl_Beneficiario> Tbl_Beneficiario1 { get; set; }
         public virtual Tbl_Cliente Tbl_Cliente { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_Transaccion> Tbl_Transaccion { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_Transaccion> Tbl_Transaccion1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tbl_Beneficiario> Tbl_Beneficiario { get; set; }
     }
 }

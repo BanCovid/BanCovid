@@ -19,10 +19,11 @@
         </EntityType>
         <EntityType Name="Tbl_Beneficiario">
           <Key>
-            <PropertyRef Name="CuentaId" />
+            <PropertyRef Name="ClienteId" />
             <PropertyRef Name="CuentaDestinoId" />
           </Key>
-          <Property Name="CuentaId" Type="int" Nullable="false" />
+          <Property Name="ClienteId" Type="int" Nullable="false" />
+          <Property Name="Alias" Type="varchar" MaxLength="100" />
           <Property Name="CuentaDestinoId" Type="int" Nullable="false" />
           <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
           <Property Name="Estado" Type="smallint" Nullable="false" />
@@ -39,7 +40,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Descripcion" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
           <Property Name="Monto" Type="decimal" Precision="20" Scale="2" Nullable="false" />
@@ -62,6 +63,7 @@
           <Property Name="ClienteId" Type="int" Nullable="false" />
           <Property Name="Monto" Type="decimal" Precision="20" Scale="2" Nullable="false" />
           <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+          <Property Name="MontoAlCorte" Type="decimal" Precision="20" Scale="2" Nullable="false" />
         </EntityType>
         <EntityType Name="Tbl_EstadoTransaccion">
           <Key>
@@ -126,6 +128,7 @@
           <Property Name="CuentaDestinoId" Type="int" />
           <Property Name="OperacionCajaId" Type="bigint" />
           <Property Name="Estado" Type="smallint" Nullable="false" />
+          <Property Name="Concepto" Type="varchar" MaxLength="200" Nullable="false" />
         </EntityType>
         <EntityType Name="Tbl_Usuario">
           <Key>
@@ -142,19 +145,19 @@
           <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
           <Property Name="Estado" Type="smallint" Nullable="false" />
         </EntityType>
-        <Association Name="FK__Tbl_Benef__Cuent__3587F3E0">
-          <End Role="Tbl_Cuenta" Type="Self.Tbl_Cuenta" Multiplicity="1" />
+        <Association Name="FK__Tbl_Benef__Clien__1B9317B3">
+          <End Role="Tbl_Usuario" Type="Self.Tbl_Usuario" Multiplicity="1" />
           <End Role="Tbl_Beneficiario" Type="Self.Tbl_Beneficiario" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Tbl_Cuenta">
+            <Principal Role="Tbl_Usuario">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Tbl_Beneficiario">
-              <PropertyRef Name="CuentaId" />
+              <PropertyRef Name="ClienteId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Tbl_Benef__Cuent__367C1819">
+        <Association Name="FK__Tbl_Benef__Cuent__1C873BEC">
           <End Role="Tbl_Cuenta" Type="Self.Tbl_Cuenta" Multiplicity="1" />
           <End Role="Tbl_Beneficiario" Type="Self.Tbl_Beneficiario" Multiplicity="*" />
           <ReferentialConstraint>
@@ -166,7 +169,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Tbl_Benef__Estad__37703C52">
+        <Association Name="FK__Tbl_Benef__Estad__1D7B6025">
           <End Role="Tbl_BeneficiarioEstado" Type="Self.Tbl_BeneficiarioEstado" Multiplicity="1" />
           <End Role="Tbl_Beneficiario" Type="Self.Tbl_Beneficiario" Multiplicity="*" />
           <ReferentialConstraint>
@@ -175,6 +178,18 @@
             </Principal>
             <Dependent Role="Tbl_Beneficiario">
               <PropertyRef Name="Estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tbl_Caja__Id__793DFFAF">
+          <End Role="Tbl_Usuario" Type="Self.Tbl_Usuario" Multiplicity="1" />
+          <End Role="Tbl_Caja" Type="Self.Tbl_Caja" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tbl_Caja">
+              <PropertyRef Name="Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -202,7 +217,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Tbl_Opera__CajaI__56E8E7AB">
+        <Association Name="FK__Tbl_Opera__CajaI__7755B73D">
           <End Role="Tbl_Caja" Type="Self.Tbl_Caja" Multiplicity="1" />
           <End Role="Tbl_OperacionCaja" Type="Self.Tbl_OperacionCaja" Multiplicity="*" />
           <ReferentialConstraint>
@@ -325,17 +340,21 @@
           <EntitySet Name="Tbl_TipoTransaccion" EntityType="Self.Tbl_TipoTransaccion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Transaccion" EntityType="Self.Tbl_Transaccion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Usuario" EntityType="Self.Tbl_Usuario" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Tbl_Benef__Cuent__3587F3E0" Association="Self.FK__Tbl_Benef__Cuent__3587F3E0">
+          <AssociationSet Name="FK__Tbl_Benef__Clien__1B9317B3" Association="Self.FK__Tbl_Benef__Clien__1B9317B3">
+            <End Role="Tbl_Usuario" EntitySet="Tbl_Usuario" />
+            <End Role="Tbl_Beneficiario" EntitySet="Tbl_Beneficiario" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Benef__Cuent__1C873BEC" Association="Self.FK__Tbl_Benef__Cuent__1C873BEC">
             <End Role="Tbl_Cuenta" EntitySet="Tbl_Cuenta" />
             <End Role="Tbl_Beneficiario" EntitySet="Tbl_Beneficiario" />
           </AssociationSet>
-          <AssociationSet Name="FK__Tbl_Benef__Cuent__367C1819" Association="Self.FK__Tbl_Benef__Cuent__367C1819">
-            <End Role="Tbl_Cuenta" EntitySet="Tbl_Cuenta" />
-            <End Role="Tbl_Beneficiario" EntitySet="Tbl_Beneficiario" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Tbl_Benef__Estad__37703C52" Association="Self.FK__Tbl_Benef__Estad__37703C52">
+          <AssociationSet Name="FK__Tbl_Benef__Estad__1D7B6025" Association="Self.FK__Tbl_Benef__Estad__1D7B6025">
             <End Role="Tbl_BeneficiarioEstado" EntitySet="Tbl_BeneficiarioEstado" />
             <End Role="Tbl_Beneficiario" EntitySet="Tbl_Beneficiario" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Caja__Id__793DFFAF" Association="Self.FK__Tbl_Caja__Id__793DFFAF">
+            <End Role="Tbl_Usuario" EntitySet="Tbl_Usuario" />
+            <End Role="Tbl_Caja" EntitySet="Tbl_Caja" />
           </AssociationSet>
           <AssociationSet Name="FK__Tbl_Cliente__Id__2CF2ADDF" Association="Self.FK__Tbl_Cliente__Id__2CF2ADDF">
             <End Role="Tbl_Usuario" EntitySet="Tbl_Usuario" />
@@ -345,7 +364,7 @@
             <End Role="Tbl_Cliente" EntitySet="Tbl_Cliente" />
             <End Role="Tbl_Cuenta" EntitySet="Tbl_Cuenta" />
           </AssociationSet>
-          <AssociationSet Name="FK__Tbl_Opera__CajaI__56E8E7AB" Association="Self.FK__Tbl_Opera__CajaI__56E8E7AB">
+          <AssociationSet Name="FK__Tbl_Opera__CajaI__7755B73D" Association="Self.FK__Tbl_Opera__CajaI__7755B73D">
             <End Role="Tbl_Caja" EntitySet="Tbl_Caja" />
             <End Role="Tbl_OperacionCaja" EntitySet="Tbl_OperacionCaja" />
           </AssociationSet>
@@ -388,7 +407,6 @@
       <Schema Namespace="BanCovid_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="BanCovid_DBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Log4NetLog" EntityType="BanCovid_DBModel.Log4NetLog" />
-          <EntitySet Name="Tbl_Beneficiario" EntityType="BanCovid_DBModel.Tbl_Beneficiario" />
           <EntitySet Name="Tbl_BeneficiarioEstado" EntityType="BanCovid_DBModel.Tbl_BeneficiarioEstado" />
           <EntitySet Name="Tbl_Caja" EntityType="BanCovid_DBModel.Tbl_Caja" />
           <EntitySet Name="Tbl_Cliente" EntityType="BanCovid_DBModel.Tbl_Cliente" />
@@ -401,18 +419,6 @@
           <EntitySet Name="Tbl_TipoTransaccion" EntityType="BanCovid_DBModel.Tbl_TipoTransaccion" />
           <EntitySet Name="Tbl_Transaccion" EntityType="BanCovid_DBModel.Tbl_Transaccion" />
           <EntitySet Name="Tbl_Usuario" EntityType="BanCovid_DBModel.Tbl_Usuario" />
-          <AssociationSet Name="FK__Tbl_Benef__Cuent__3587F3E0" Association="BanCovid_DBModel.FK__Tbl_Benef__Cuent__3587F3E0">
-            <End Role="Tbl_Cuenta" EntitySet="Tbl_Cuenta" />
-            <End Role="Tbl_Beneficiario" EntitySet="Tbl_Beneficiario" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Tbl_Benef__Cuent__367C1819" Association="BanCovid_DBModel.FK__Tbl_Benef__Cuent__367C1819">
-            <End Role="Tbl_Cuenta" EntitySet="Tbl_Cuenta" />
-            <End Role="Tbl_Beneficiario" EntitySet="Tbl_Beneficiario" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Tbl_Benef__Estad__37703C52" Association="BanCovid_DBModel.FK__Tbl_Benef__Estad__37703C52">
-            <End Role="Tbl_BeneficiarioEstado" EntitySet="Tbl_BeneficiarioEstado" />
-            <End Role="Tbl_Beneficiario" EntitySet="Tbl_Beneficiario" />
-          </AssociationSet>
           <AssociationSet Name="FK__Tbl_Opera__CajaI__56E8E7AB" Association="BanCovid_DBModel.FK__Tbl_Opera__CajaI__56E8E7AB">
             <End Role="Tbl_Caja" EntitySet="Tbl_Caja" />
             <End Role="Tbl_OperacionCaja" EntitySet="Tbl_OperacionCaja" />
@@ -457,6 +463,23 @@
             <End Role="Tbl_TipoTransaccion" EntitySet="Tbl_TipoTransaccion" />
             <End Role="Tbl_Transaccion" EntitySet="Tbl_Transaccion" />
           </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Caja__Id__793DFFAF" Association="BanCovid_DBModel.FK__Tbl_Caja__Id__793DFFAF">
+            <End Role="Tbl_Usuario" EntitySet="Tbl_Usuario" />
+            <End Role="Tbl_Caja" EntitySet="Tbl_Caja" />
+          </AssociationSet>
+          <EntitySet Name="Tbl_Beneficiario" EntityType="BanCovid_DBModel.Tbl_Beneficiario" />
+          <AssociationSet Name="FK__Tbl_Benef__Clien__1B9317B3" Association="BanCovid_DBModel.FK__Tbl_Benef__Clien__1B9317B3">
+            <End Role="Tbl_Usuario" EntitySet="Tbl_Usuario" />
+            <End Role="Tbl_Beneficiario" EntitySet="Tbl_Beneficiario" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Benef__Cuent__1C873BEC" Association="BanCovid_DBModel.FK__Tbl_Benef__Cuent__1C873BEC">
+            <End Role="Tbl_Cuenta" EntitySet="Tbl_Cuenta" />
+            <End Role="Tbl_Beneficiario" EntitySet="Tbl_Beneficiario" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Benef__Estad__1D7B6025" Association="BanCovid_DBModel.FK__Tbl_Benef__Estad__1D7B6025">
+            <End Role="Tbl_BeneficiarioEstado" EntitySet="Tbl_BeneficiarioEstado" />
+            <End Role="Tbl_Beneficiario" EntitySet="Tbl_Beneficiario" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Log4NetLog">
           <Key>
@@ -470,19 +493,6 @@
           <Property Name="Message" Type="String" Nullable="false" MaxLength="4000" FixedLength="false" Unicode="false" />
           <Property Name="Exception" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="Tbl_Beneficiario">
-          <Key>
-            <PropertyRef Name="CuentaId" />
-            <PropertyRef Name="CuentaDestinoId" />
-          </Key>
-          <Property Name="CuentaId" Type="Int32" Nullable="false" />
-          <Property Name="CuentaDestinoId" Type="Int32" Nullable="false" />
-          <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Estado" Type="Int16" Nullable="false" />
-          <NavigationProperty Name="Tbl_Cuenta" Relationship="BanCovid_DBModel.FK__Tbl_Benef__Cuent__3587F3E0" FromRole="Tbl_Beneficiario" ToRole="Tbl_Cuenta" />
-          <NavigationProperty Name="Tbl_Cuenta1" Relationship="BanCovid_DBModel.FK__Tbl_Benef__Cuent__367C1819" FromRole="Tbl_Beneficiario" ToRole="Tbl_Cuenta" />
-          <NavigationProperty Name="Tbl_BeneficiarioEstado" Relationship="BanCovid_DBModel.FK__Tbl_Benef__Estad__37703C52" FromRole="Tbl_Beneficiario" ToRole="Tbl_BeneficiarioEstado" />
-        </EntityType>
         <EntityType Name="Tbl_BeneficiarioEstado">
           <Key>
             <PropertyRef Name="Id" />
@@ -490,7 +500,7 @@
           <Property Name="Id" Type="Int16" Nullable="false" />
           <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Tbl_Beneficiario" Relationship="BanCovid_DBModel.FK__Tbl_Benef__Estad__37703C52" FromRole="Tbl_BeneficiarioEstado" ToRole="Tbl_Beneficiario" />
+          <NavigationProperty Name="Tbl_Beneficiario" Relationship="BanCovid_DBModel.FK__Tbl_Benef__Estad__1D7B6025" FromRole="Tbl_BeneficiarioEstado" ToRole="Tbl_Beneficiario" />
         </EntityType>
         <EntityType Name="Tbl_Caja">
           <Key>
@@ -502,6 +512,7 @@
           <Property Name="Monto" Type="Decimal" Nullable="false" Precision="20" Scale="2" />
           <Property Name="Estado" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Tbl_OperacionCaja" Relationship="BanCovid_DBModel.FK__Tbl_Opera__CajaI__56E8E7AB" FromRole="Tbl_Caja" ToRole="Tbl_OperacionCaja" />
+          <NavigationProperty Name="Tbl_Usuario" Relationship="BanCovid_DBModel.FK__Tbl_Caja__Id__793DFFAF" FromRole="Tbl_Caja" ToRole="Tbl_Usuario" />
         </EntityType>
         <EntityType Name="Tbl_Cliente">
           <Key>
@@ -522,11 +533,11 @@
           <Property Name="ClienteId" Type="Int32" Nullable="false" />
           <Property Name="Monto" Type="Decimal" Nullable="false" Precision="20" Scale="2" />
           <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Tbl_Beneficiario" Relationship="BanCovid_DBModel.FK__Tbl_Benef__Cuent__3587F3E0" FromRole="Tbl_Cuenta" ToRole="Tbl_Beneficiario" />
-          <NavigationProperty Name="Tbl_Beneficiario1" Relationship="BanCovid_DBModel.FK__Tbl_Benef__Cuent__367C1819" FromRole="Tbl_Cuenta" ToRole="Tbl_Beneficiario" />
           <NavigationProperty Name="Tbl_Cliente" Relationship="BanCovid_DBModel.FK__Tbl_Cuent__Clien__30C33EC3" FromRole="Tbl_Cuenta" ToRole="Tbl_Cliente" />
           <NavigationProperty Name="Tbl_Transaccion" Relationship="BanCovid_DBModel.FK__Tbl_Trans__Cuent__5CA1C101" FromRole="Tbl_Cuenta" ToRole="Tbl_Transaccion" />
           <NavigationProperty Name="Tbl_Transaccion1" Relationship="BanCovid_DBModel.FK__Tbl_Trans__Cuent__5D95E53A" FromRole="Tbl_Cuenta" ToRole="Tbl_Transaccion" />
+          <Property Name="MontoAlCorte" Type="Decimal" Nullable="false" Precision="20" Scale="2" />
+          <NavigationProperty Name="Tbl_Beneficiario" Relationship="BanCovid_DBModel.FK__Tbl_Benef__Cuent__1C873BEC" FromRole="Tbl_Cuenta" ToRole="Tbl_Beneficiario" />
         </EntityType>
         <EntityType Name="Tbl_EstadoTransaccion">
           <Key>
@@ -604,6 +615,7 @@
           <NavigationProperty Name="Tbl_EstadoTransaccion" Relationship="BanCovid_DBModel.FK__Tbl_Trans__Estad__5BAD9CC8" FromRole="Tbl_Transaccion" ToRole="Tbl_EstadoTransaccion" />
           <NavigationProperty Name="Tbl_OperacionCaja" Relationship="BanCovid_DBModel.FK__Tbl_Trans__Opera__5E8A0973" FromRole="Tbl_Transaccion" ToRole="Tbl_OperacionCaja" />
           <NavigationProperty Name="Tbl_TipoTransaccion" Relationship="BanCovid_DBModel.FK__Tbl_Trans__TipoT__5AB9788F" FromRole="Tbl_Transaccion" ToRole="Tbl_TipoTransaccion" />
+          <Property Name="Concepto" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Tbl_Usuario">
           <Key>
@@ -622,43 +634,9 @@
           <NavigationProperty Name="Tbl_Cliente" Relationship="BanCovid_DBModel.FK__Tbl_Cliente__Id__2CF2ADDF" FromRole="Tbl_Usuario" ToRole="Tbl_Cliente" />
           <NavigationProperty Name="Tbl_EstadoUsuario" Relationship="BanCovid_DBModel.FK__Tbl_Usuar__Estad__236943A5" FromRole="Tbl_Usuario" ToRole="Tbl_EstadoUsuario" />
           <NavigationProperty Name="Tbl_Perfil" Relationship="BanCovid_DBModel.FK__Tbl_Usuar__Perfi__245D67DE" FromRole="Tbl_Usuario" ToRole="Tbl_Perfil" />
+          <NavigationProperty Name="Tbl_Caja" Relationship="BanCovid_DBModel.FK__Tbl_Caja__Id__793DFFAF" FromRole="Tbl_Usuario" ToRole="Tbl_Caja" />
+          <NavigationProperty Name="Tbl_Beneficiario" Relationship="BanCovid_DBModel.FK__Tbl_Benef__Clien__1B9317B3" FromRole="Tbl_Usuario" ToRole="Tbl_Beneficiario" />
         </EntityType>
-        <Association Name="FK__Tbl_Benef__Cuent__3587F3E0">
-          <End Type="BanCovid_DBModel.Tbl_Cuenta" Role="Tbl_Cuenta" Multiplicity="1" />
-          <End Type="BanCovid_DBModel.Tbl_Beneficiario" Role="Tbl_Beneficiario" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tbl_Cuenta">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Tbl_Beneficiario">
-              <PropertyRef Name="CuentaId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Tbl_Benef__Cuent__367C1819">
-          <End Type="BanCovid_DBModel.Tbl_Cuenta" Role="Tbl_Cuenta" Multiplicity="1" />
-          <End Type="BanCovid_DBModel.Tbl_Beneficiario" Role="Tbl_Beneficiario" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tbl_Cuenta">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Tbl_Beneficiario">
-              <PropertyRef Name="CuentaDestinoId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Tbl_Benef__Estad__37703C52">
-          <End Type="BanCovid_DBModel.Tbl_BeneficiarioEstado" Role="Tbl_BeneficiarioEstado" Multiplicity="1" />
-          <End Type="BanCovid_DBModel.Tbl_Beneficiario" Role="Tbl_Beneficiario" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tbl_BeneficiarioEstado">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Tbl_Beneficiario">
-              <PropertyRef Name="Estado" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Tbl_Opera__CajaI__56E8E7AB">
           <End Type="BanCovid_DBModel.Tbl_Caja" Role="Tbl_Caja" Multiplicity="1" />
           <End Type="BanCovid_DBModel.Tbl_OperacionCaja" Role="Tbl_OperacionCaja" Multiplicity="*" />
@@ -791,6 +769,68 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Tbl_Caja__Id__793DFFAF">
+          <End Type="BanCovid_DBModel.Tbl_Usuario" Role="Tbl_Usuario" Multiplicity="1" />
+          <End Type="BanCovid_DBModel.Tbl_Caja" Role="Tbl_Caja" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tbl_Caja">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Tbl_Beneficiario">
+          <Key>
+            <PropertyRef Name="ClienteId" />
+            <PropertyRef Name="CuentaDestinoId" />
+          </Key>
+          <Property Name="ClienteId" Type="Int32" Nullable="false" />
+          <Property Name="Alias" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CuentaDestinoId" Type="Int32" Nullable="false" />
+          <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Estado" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="Tbl_Usuario" Relationship="BanCovid_DBModel.FK__Tbl_Benef__Clien__1B9317B3" FromRole="Tbl_Beneficiario" ToRole="Tbl_Usuario" />
+          <NavigationProperty Name="Tbl_Cuenta" Relationship="BanCovid_DBModel.FK__Tbl_Benef__Cuent__1C873BEC" FromRole="Tbl_Beneficiario" ToRole="Tbl_Cuenta" />
+          <NavigationProperty Name="Tbl_BeneficiarioEstado" Relationship="BanCovid_DBModel.FK__Tbl_Benef__Estad__1D7B6025" FromRole="Tbl_Beneficiario" ToRole="Tbl_BeneficiarioEstado" />
+        </EntityType>
+        <Association Name="FK__Tbl_Benef__Clien__1B9317B3">
+          <End Type="BanCovid_DBModel.Tbl_Usuario" Role="Tbl_Usuario" Multiplicity="1" />
+          <End Type="BanCovid_DBModel.Tbl_Beneficiario" Role="Tbl_Beneficiario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tbl_Beneficiario">
+              <PropertyRef Name="ClienteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tbl_Benef__Cuent__1C873BEC">
+          <End Type="BanCovid_DBModel.Tbl_Cuenta" Role="Tbl_Cuenta" Multiplicity="1" />
+          <End Type="BanCovid_DBModel.Tbl_Beneficiario" Role="Tbl_Beneficiario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Cuenta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tbl_Beneficiario">
+              <PropertyRef Name="CuentaDestinoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tbl_Benef__Estad__1D7B6025">
+          <End Type="BanCovid_DBModel.Tbl_BeneficiarioEstado" Role="Tbl_BeneficiarioEstado" Multiplicity="1" />
+          <End Type="BanCovid_DBModel.Tbl_Beneficiario" Role="Tbl_Beneficiario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_BeneficiarioEstado">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tbl_Beneficiario">
+              <PropertyRef Name="Estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -807,16 +847,6 @@
                 <ScalarProperty Name="Thread" ColumnName="Thread" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tbl_Beneficiario">
-            <EntityTypeMapping TypeName="BanCovid_DBModel.Tbl_Beneficiario">
-              <MappingFragment StoreEntitySet="Tbl_Beneficiario">
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
-                <ScalarProperty Name="CuentaDestinoId" ColumnName="CuentaDestinoId" />
-                <ScalarProperty Name="CuentaId" ColumnName="CuentaId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -852,6 +882,7 @@
           <EntitySetMapping Name="Tbl_Cuenta">
             <EntityTypeMapping TypeName="BanCovid_DBModel.Tbl_Cuenta">
               <MappingFragment StoreEntitySet="Tbl_Cuenta">
+                <ScalarProperty Name="MontoAlCorte" ColumnName="MontoAlCorte" />
                 <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
                 <ScalarProperty Name="Monto" ColumnName="Monto" />
                 <ScalarProperty Name="ClienteId" ColumnName="ClienteId" />
@@ -920,6 +951,7 @@
           <EntitySetMapping Name="Tbl_Transaccion">
             <EntityTypeMapping TypeName="BanCovid_DBModel.Tbl_Transaccion">
               <MappingFragment StoreEntitySet="Tbl_Transaccion">
+                <ScalarProperty Name="Concepto" ColumnName="Concepto" />
                 <ScalarProperty Name="Estado" ColumnName="Estado" />
                 <ScalarProperty Name="OperacionCajaId" ColumnName="OperacionCajaId" />
                 <ScalarProperty Name="CuentaDestinoId" ColumnName="CuentaDestinoId" />
@@ -944,6 +976,17 @@
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_Beneficiario">
+            <EntityTypeMapping TypeName="BanCovid_DBModel.Tbl_Beneficiario">
+              <MappingFragment StoreEntitySet="Tbl_Beneficiario">
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="CuentaDestinoId" ColumnName="CuentaDestinoId" />
+                <ScalarProperty Name="Alias" ColumnName="Alias" />
+                <ScalarProperty Name="ClienteId" ColumnName="ClienteId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

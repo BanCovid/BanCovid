@@ -1,4 +1,5 @@
 ﻿using Core.ModeloData;
+using Core.Modelos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,20 +17,41 @@ namespace Core.Servicios
             _db = new BanCovid_DBEntities();
         }
 
-        public void Crear(Tbl_Beneficiario modelo)
+        public void Crear(BeneficiarioModelo modelo)
         {
             log.Info("BeneficiarioServicio - Crear - Inicio");
-            modelo.Estado = 1;
-            _db.Tbl_Beneficiario.Add(modelo);
+
+            var cuenta = _db.Tbl_Cuenta.SingleOrDefault(x => x.NoCuenta == modelo.CuentaDestino.Trim());
+
+            if (cuenta == null)
+                throw new Exception("La cuenta no existe");
+
+            if (cuenta.ClienteId == modelo.ClienteId)
+                throw new Exception("No puedes agregar una de tus cuentas como beneficiario");
+
+            var beneficiario = _db.Tbl_Beneficiario.SingleOrDefault(x => x.ClienteId == modelo.ClienteId &&
+                x.CuentaDestinoId == cuenta.Id);
+
+            if (beneficiario != null)
+                throw new Exception("La cuenta ya existe como beneficiario");
+
+            _db.Tbl_Beneficiario.Add(new Tbl_Beneficiario 
+            {
+                ClienteId = modelo.ClienteId,
+                CuentaDestinoId = cuenta.Id,
+                Estado = 1,
+                Alias = modelo.Alias,
+                FechaCreacion = DateTime.Now
+            });
 
             _db.SaveChanges();
             log.Info("BeneficiarioServicio - Crear - Fin");
         }
 
-        public List<Tbl_Beneficiario> ObtenerTodos()
+        public List<Tbl_Beneficiario> ObtenerTodos(int clienteId)
         {
             log.Info("BeneficiarioServicio - ObtenerTodos - Inicio");
-            var data = _db.Tbl_Beneficiario.ToList();
+            var data = _db.Tbl_Beneficiario.Where(x => x.ClienteId == clienteId).ToList();
             log.Info("BeneficiarioServicio - ObtenerTodos - Fin");
             return data;
         }
@@ -37,7 +59,7 @@ namespace Core.Servicios
         public Tbl_Beneficiario Obtener(int id)
         {
             log.Info("BeneficiarioServicio - Obtener - Inicio");
-            var data = _db.Tbl_Beneficiario.SingleOrDefault(x => x.CuentaId == id);
+            var data = _db.Tbl_Beneficiario.SingleOrDefault(x => x.ClienteId == id);
             log.Info("BeneficiarioServicio - Obtener - Fin");
             return data;
         }
@@ -45,7 +67,7 @@ namespace Core.Servicios
         public void Eliminar(int idCuenta , int idCuentaDestino)
         {
             log.Info("BeneficiarioServicio - Eliminar - Inicio");
-            var registro = _db.Tbl_Beneficiario.SingleOrDefault(x => x.CuentaId == idCuenta && x.CuentaDestinoId== idCuentaDestino);
+            var registro = _db.Tbl_Beneficiario.SingleOrDefault(x => x.ClienteId == idCuenta && x.CuentaDestinoId== idCuentaDestino);
 
             registro.Estado = 0;
 

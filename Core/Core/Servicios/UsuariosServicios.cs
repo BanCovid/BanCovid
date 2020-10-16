@@ -33,24 +33,44 @@ namespace Core.Servicios
                 _db.Tbl_Usuario.Add(modelo);
                 _db.SaveChanges();
 
-                if (modelo.Perfil_Id == 3)// Cliente
+                switch (modelo.Perfil_Id)
                 {
-                    _db.Tbl_Cliente.Add(new Tbl_Cliente
-                    {
-                        Id = modelo.Id,
-                        Direccion = "",
-                        FechaCreacion = DateTime.Now
-                    });
+                    case 2:
 
-                    _db.SaveChanges();
+                        _db.Tbl_Caja.Add(new Tbl_Caja
+                        {
+                            Id = modelo.Id,
+                            Descripcion = "",
+                            Estado = false,
+                            Monto = 0,
+                            FechaCreacion = DateTime.Now
+                        });
+
+                        _db.SaveChanges();
+
+                        break;
+                    case 3:
+
+                        _db.Tbl_Cliente.Add(new Tbl_Cliente
+                        {
+                            Id = modelo.Id,
+                            Direccion = "",
+                            FechaCreacion = DateTime.Now
+                        });
+
+                        _db.SaveChanges();
+                        break;
                 }
+
                     
-                log.Info("UsuariosServicio - Crear - Fin");
                 transaccion.Commit();
+                log.Info("UsuariosServicio - Crear - Fin");
             }
             catch (Exception ex)
             {
                 if (transaccion != null) transaccion.Rollback();
+                log.Error(ex);
+                throw;
             }
             finally
             {
@@ -63,10 +83,16 @@ namespace Core.Servicios
         {
             log.Info("UsuariosServicio - InicioSesion - Inicio");
 
-            if (string.IsNullOrWhiteSpace(modelo.UserName))
+            if (modelo == null || string.IsNullOrWhiteSpace(modelo.UserName))
                 throw new Exception("Usuario o contraseña incorrecta");
 
             var usuario = _db.Tbl_Usuario.SingleOrDefault(x => x.UserName == modelo.UserName);
+
+            if (usuario == null)
+                throw new Exception("Usuario o contraseña incorrecta");
+
+            if (usuario.Estado != 1)
+                throw new Exception("El usuario no esta activo");
 
             if (!Seguridad.Validar(modelo.Password, usuario.Password))
                 throw new Exception("Usuario o contraseña incorrecta");

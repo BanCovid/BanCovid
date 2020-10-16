@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Card, Col, Form, Row } from 'react-bootstrap';
+import { Button, Card, Col, Form, Row, Spinner } from 'react-bootstrap';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import Breadcrumb from '../../App/components/Breadcrumb';
 import ErrorSection from '../../App/components/ErrorSection';
@@ -26,7 +26,7 @@ const Expreso = () => {
     const [formModel, setFormModel] = useState<TransferenciaModelo>({
         Monto: 0,
         CuentaDestino: '',
-        NoCuenta: id
+        Cuenta: id
     } as TransferenciaModelo);
 
 
@@ -147,14 +147,15 @@ const Expreso = () => {
                                             </Form.Group>
                                             <Form.Group style={{ textAlign: 'right' }}>
                                                 <Button type="submit" variant="secondary" disabled={!agree || loading}>
-                                                    {/* <Spinner
+                                                    <Spinner
                                                         as="span"
                                                         animation="border"
                                                         size="sm"
                                                         role="status"
                                                         aria-hidden="true"
-                                                    /> */}
-                                                    <UcFirst text={(loading) ? "Validando.." : "Realizar transferencia"} />
+                                                        style={{display: (loading)? 'inline-block' : 'none'}}
+                                                    />
+                                                    <UcFirst text={(loading) ? " Validando.. " : "Realizar transferencia"} />
                                                 </Button>
                                             </Form.Group>
                                         </Col>

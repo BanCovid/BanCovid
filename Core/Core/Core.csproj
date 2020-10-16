@@ -128,6 +128,9 @@
     <Compile Include="ModeloData\Tbl_Usuario.cs">
       <DependentUpon>Contexto.tt</DependentUpon>
     </Compile>
+    <Compile Include="Modelos\BeneficiarioModelo.cs" />
+    <Compile Include="Modelos\CuentaEstadisticaModelo.cs" />
+    <Compile Include="Modelos\TransaccionModelo.cs" />
     <Compile Include="Modelos\UsuarioModelo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Servicios\BeneficiariosServicios.cs" />
@@ -135,7 +138,7 @@
     <Compile Include="Servicios\CajaServicios.cs" />
     <Compile Include="Servicios\ClienteServicios.cs" />
     <Compile Include="Servicios\OperacionCajaServicios.cs" />
-    <Compile Include="Servicios\CuentaServicio.cs" />
+    <Compile Include="Servicios\CuentasServicio.cs" />
     <Compile Include="Servicios\EstadosUsuariosServicios.cs" />
     <Compile Include="Servicios\OperacionCajaTipoServicios.cs" />
     <Compile Include="Servicios\PerfilesServicios.cs" />

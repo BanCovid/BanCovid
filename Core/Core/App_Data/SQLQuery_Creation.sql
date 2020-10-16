@@ -45,14 +45,15 @@ CREATE TABLE [dbo].[Tbl_Usuario]
 )
 
 ALTER TABLE [Tbl_Usuario]
+	ADD CONSTRAINT UC_Cedula_Usuario UNIQUE (Cedula);
+
+ALTER TABLE [Tbl_Usuario]
 	ADD FOREIGN KEY (Estado) REFERENCES Tbl_EstadoUsuario(Id);
 
 ALTER TABLE [Tbl_Usuario]
 	ADD FOREIGN KEY (Perfil_Id) REFERENCES Tbl_Perfil(Id);
 
 GO
-
-
 
 --DROP TABLE [Tbl_Cliente]
 CREATE TABLE [dbo].[Tbl_Cliente]
@@ -80,9 +81,14 @@ CREATE TABLE [dbo].[Tbl_Cuenta]
 )
 
 ALTER TABLE [Tbl_Cuenta]
+	ADD [MontoAlCorte] DECIMAL (20, 2) NOT NULL DEFAULT (0)
+
+ALTER TABLE [Tbl_Cuenta]
 	ADD FOREIGN KEY (ClienteId) REFERENCES Tbl_Cliente(Id);
 
 GO
+
+--update [Tbl_Cuenta] set Monto = 500
 
 --DROP TABLE [Tbl_BeneficiarioEstado]
 CREATE TABLE [dbo].[Tbl_BeneficiarioEstado]
@@ -94,21 +100,23 @@ CREATE TABLE [dbo].[Tbl_BeneficiarioEstado]
 
 INSERT INTO [dbo].[Tbl_BeneficiarioEstado] VALUES (0, 'Inactivo', GETDATE());
 INSERT INTO [dbo].[Tbl_BeneficiarioEstado] VALUES (1, 'Activo', GETDATE());
-INSERT INTO [dbo].[Tbl_BeneficiarioEstado] VALUES (2, 'Bloqueado', GETDATE());
 
 GO
 --DROP TABLE [Tbl_Beneficiario]
 CREATE TABLE [dbo].[Tbl_Beneficiario]
 (
-	[CuentaId] INT NOT NULL,
+	[ClienteId] INT NOT NULL,
+	[Alias] VARCHAR(100) NULL,
 	[CuentaDestinoId] INT NOT NULL,
 	[FechaCreacion] DATETIME NOT NULL,
 	[Estado] SMALLINT NOT NULL,
-	PRIMARY KEY(CuentaId, CuentaDestinoId)
+	PRIMARY KEY(ClienteId, CuentaDestinoId)
 )
 
+--delete [Tbl_Beneficiario]
+
 ALTER TABLE [Tbl_Beneficiario]
-	ADD FOREIGN KEY (CuentaId) REFERENCES Tbl_Cuenta(Id);
+	ADD FOREIGN KEY (ClienteId) REFERENCES Tbl_Usuario(Id);
 
 ALTER TABLE [Tbl_Beneficiario]
 	ADD FOREIGN KEY (CuentaDestinoId) REFERENCES Tbl_Cuenta(Id);
@@ -160,18 +168,36 @@ INSERT INTO [dbo].[Tbl_OperacionCajaTipo] VALUES (2, 'Cierre de caja', 1);
 INSERT INTO [dbo].[Tbl_OperacionCajaTipo] VALUES (3, 'Entrada de efectivo', 1);
 INSERT INTO [dbo].[Tbl_OperacionCajaTipo] VALUES (4, 'Salida de efectivo', 1);
 
+--DROP TABLE [Tbl_Sucursal]
+CREATE TABLE [dbo].[Tbl_Sucursal]
+(
+	[Id] SMALLINT IDENTITY(1, 1)  NOT NULL,
+	[Descripcion] VARCHAR(200) NOT NULL,
+	[Estado] BIT NOT NULL -- 0 - No disponible, 1 - Disponible
+	PRIMARY KEY(Id)
+)
+
 GO
 
 --DROP TABLE [Tbl_Caja]
 CREATE TABLE [dbo].[Tbl_Caja]
 (
-	[Id] INT IDENTITY(1, 1) NOT NULL,
+	[Id] INT  NOT NULL,
 	[Descripcion] VARCHAR(200) NOT NULL,
 	[FechaCreacion] DATETIME NOT NULL,
 	[Monto] DECIMAL(20,2) NOT NULL,
 	[Estado] BIT NOT NULL -- 0 - No disponible, 1 - Disponible
 	PRIMARY KEY(Id)
 )
+
+ALTER TABLE [Tbl_Caja]
+	ADD [SucursalId] SMALLINT NULL;
+
+ALTER TABLE [Tbl_Caja]
+	ADD FOREIGN KEY (SucursalId) REFERENCES Tbl_Sucursal(Id);
+
+ALTER TABLE [Tbl_Caja]
+	ADD FOREIGN KEY (Id) REFERENCES Tbl_Usuario(Id);
 
 GO
 
@@ -208,6 +234,9 @@ CREATE TABLE [dbo].[Tbl_Transaccion]
 	[OperacionCajaId] BIGINT NULL,
 	[Estado] SMALLINT NOT NULL
 )
+
+ALTER TABLE [Tbl_Transaccion] 
+	ADD [Concepto] VARCHAR(200) NOT NULL DEFAULT ('')
 
 ALTER TABLE [Tbl_Transaccion]
 	ADD FOREIGN KEY (TipoTransaccionId) REFERENCES Tbl_TipoTransaccion(Id);
