@@ -8,6 +8,7 @@ namespace Core.Modelos
         public long Id { get; set; }
         public string Concepto { get; set; }
         public string Titular { get; set; }
+        public string TitularDestino { get; set; }
         public TipoTransaccion TipoTransaccion { get; set; }
         public decimal Monto { get; set; }
         public System.DateTime Fecha { get; set; }

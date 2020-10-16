@@ -51,21 +51,21 @@ namespace Integracion.Controllers
             {
                 var list = _servicio.ObtenerTodos(noCuenta);
 
-                return Ok(list.Select(x => new TransaccionModelo 
+                return Ok(list.Select(x => new TransaccionModelo
                 {
                     Cuenta = x.Tbl_Cuenta.NoCuenta,
-                    CuentaDestino = x.Tbl_Cuenta1.NoCuenta,
+                    CuentaDestino = (x.Tbl_Cuenta1 == null) ? null : x.Tbl_Cuenta1.NoCuenta,
                     Concepto = x.Concepto,
                     TipoTransaccion = (TipoTransaccion)x.TipoTransaccionId,
                     Monto = x.Monto,
                     Estado = x.Estado,
-                    Titular = (noCuenta == x.Tbl_Cuenta.NoCuenta) ? 
-                                x.Tbl_Cuenta1.Tbl_Cliente.Tbl_Usuario.Nombre + " " + 
-                                x.Tbl_Cuenta1.Tbl_Cliente.Tbl_Usuario.Apellido :
-                                x.Tbl_Cuenta.Tbl_Cliente.Tbl_Usuario.Nombre + " " +
+                    Titular = x.Tbl_Cuenta.Tbl_Cliente.Tbl_Usuario.Nombre + " " +
                                 x.Tbl_Cuenta.Tbl_Cliente.Tbl_Usuario.Apellido,
+                    TitularDestino = (x.Tbl_Cuenta1 == null)? "" :
+                                x.Tbl_Cuenta1.Tbl_Cliente.Tbl_Usuario.Nombre + " " +
+                                x.Tbl_Cuenta1.Tbl_Cliente.Tbl_Usuario.Apellido,
                     Fecha = x.Fecha
-                }));
+                })); ;
             }
             catch (Exception ex)
             {
