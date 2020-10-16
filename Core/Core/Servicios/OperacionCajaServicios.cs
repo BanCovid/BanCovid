@@ -48,7 +48,11 @@ namespace Core.Servicios
                     var cajaOp = _db.Tbl_OperacionCaja.SingleOrDefault(x => x.CajaId == modelo.CajaId
                                     && x.TipoId == (short)TipoOperacion.AperturaCaja
                                     && EntityFunctions.TruncateTime(x.Fecha) == currentDate);
-                    if (cajaOp != null)
+                    var cajaOp2 = _db.Tbl_OperacionCaja.SingleOrDefault(x => x.CajaId == modelo.CajaId
+                                    && x.TipoId == (short)TipoOperacion.CierreCaja
+                                    && EntityFunctions.TruncateTime(x.Fecha) == currentDate);
+                    
+                    if (cajaOp != null && cajaOp2 == null)
                         throw new Exception("La caja ya se encuentra abierta");
                     caja.Estado = true;
                     modelo.Monto = caja.Monto;
